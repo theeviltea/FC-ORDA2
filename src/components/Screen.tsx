@@ -1,4 +1,4 @@
-import { useState, type ReactNode } from 'react';
+import { useState, type ReactNode, type RefObject } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -20,10 +20,12 @@ type Props = {
   bg?: string;
   /** Header background when it differs from the page (white on articles). */
   headerBg?: string;
+  /** Access to the scroll view (jump to a section). */
+  scrollRef?: RefObject<ScrollView | null>;
 };
 
 /** Screen on the brand background: fixed header on top, scrollable content below. */
-export function Screen({ children, header, tabs, gap = 28, decor, footer, footerHeight = 0, bg = colors.bg, headerBg }: Props) {
+export function Screen({ children, header, tabs, gap = 28, decor, footer, footerHeight = 0, bg = colors.bg, headerBg, scrollRef }: Props) {
   const insets = useSafeAreaInsets();
   const [scrolled, setScrolled] = useState(false);
   return (
@@ -42,6 +44,7 @@ export function Screen({ children, header, tabs, gap = 28, decor, footer, footer
         </View>
       ) : null}
       <ScrollView
+        ref={scrollRef}
         showsVerticalScrollIndicator={false}
         scrollEventThrottle={32}
         onScroll={(e) => {

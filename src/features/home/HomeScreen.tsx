@@ -286,9 +286,9 @@ function PlayerOfMatch() {
   const ph = 420;
   return (
     <View style={{ gap: 12, paddingHorizontal: 20 }}>
-      <SectionHeader title="Игрок матча" link="Подробнее" onPress={soon('Игрок')} inset={false} />
+      <SectionHeader title="Игрок матча" link="Подробнее" onPress={() => router.push({ pathname: '/player/[num]', params: { num: '10' } })} inset={false} />
       <Card style={{ borderRadius: radius.xl, overflow: 'hidden' }}>
-        <Pressable accessibilityRole="link" accessibilityLabel={p.name} onPress={soon('Игрок')}>
+        <Pressable accessibilityRole="link" accessibilityLabel={p.name} onPress={() => router.push({ pathname: '/player/[num]', params: { num: '10' } })}>
           <Gradient style={{ height: 230, overflow: 'hidden' }}>
             <Text display size={100} lineHeight={88} color="rgba(255,255,255,0.1)" style={{ position: 'absolute', left: 10, top: -4 }} aria-hidden>
               {'BEST\nPLAYER'}
@@ -337,10 +337,10 @@ function PlayerOfMatch() {
 function Squad() {
   return (
     <View style={{ gap: 12 }}>
-      <SectionHeader title="Команда" link="Подробнее" onPress={soon('Команда')} />
+      <SectionHeader title="Команда" link="Подробнее" onPress={() => router.push('/team')} />
       <Carousel>
         {squad.map((p) => (
-          <PlayerCard key={p.name} person={p} onPress={soon('Игрок')} />
+          <PlayerCard key={p.name} person={p} onPress={() => router.push({ pathname: '/player/[num]', params: { num: p.num } })} />
         ))}
       </Carousel>
     </View>

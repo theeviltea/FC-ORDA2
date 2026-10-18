@@ -1,8 +1,8 @@
+import { router } from 'expo-router';
 import { Share, View } from 'react-native';
 
 import { Card, Carousel, Gradient, Icon, NavBar, PersonAvatar, Pitch, Pressable, Screen, Star, Text } from '@/components';
 import { bench, startingXI } from '@/data/lineup';
-import { soon } from '@/data/nav';
 import { colors, radius, shadows } from '@/theme';
 
 const roleOrder = ['Вратарь', 'Защитник', 'Полузащитник', 'Нападающий'];
@@ -38,7 +38,7 @@ export default function Lineup() {
         </Text>
       </View>
 
-      <Pressable accessibilityRole="link" onPress={soon('Тренерский штаб')} style={{ marginHorizontal: 20, padding: 12, borderRadius: radius.l, backgroundColor: colors.surface, flexDirection: 'row', alignItems: 'center', gap: 12, ...shadows.card }}>
+      <Pressable accessibilityRole="link" onPress={() => router.push('/team')} style={{ marginHorizontal: 20, padding: 12, borderRadius: radius.l, backgroundColor: colors.surface, flexDirection: 'row', alignItems: 'center', gap: 12, ...shadows.card }}>
         <PersonAvatar who="martin" size={56} photoHeight={250} />
         <View style={{ flex: 1, gap: 2 }}>
           <Text size={17} weight={700}>
@@ -71,7 +71,7 @@ export default function Lineup() {
             key={p.num}
             accessibilityRole="link"
             accessibilityLabel={`${p.num}, ${p.name}`}
-            onPress={soon('Игрок')}
+            onPress={() => router.push({ pathname: '/player/[num]', params: { num: p.num } })}
             style={{ position: 'absolute', left: `${p.x}%`, top: `${p.y}%`, width: 84, marginLeft: -42, alignItems: 'center', gap: 4 }}>
             <View style={{ width: 48, height: 48 }}>
               <PersonAvatar who={p.who} size={48} photoHeight={210} border />
@@ -93,7 +93,7 @@ export default function Lineup() {
       <Section title="Стартовый состав" count={11} />
       <Card style={{ marginHorizontal: 20, paddingHorizontal: 14, paddingVertical: 4 }}>
         {list.map((p, i) => (
-          <Pressable key={p.num} accessibilityRole="link" onPress={soon('Игрок')} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 10, borderBottomWidth: i < list.length - 1 ? 1 : 0, borderColor: colors.surfaceSunken }}>
+          <Pressable key={p.num} accessibilityRole="link" onPress={() => router.push({ pathname: '/player/[num]', params: { num: p.num } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 12, paddingVertical: 10, borderBottomWidth: i < list.length - 1 ? 1 : 0, borderColor: colors.surfaceSunken }}>
             <Text display size={17} color="text2" align="center" style={{ width: 22 }}>
               {p.num}
             </Text>
@@ -120,7 +120,7 @@ export default function Lineup() {
       <Section title="Запасные" count={bench.length} />
       <Carousel gap={10}>
         {bench.map((p) => (
-          <Pressable key={p.num} accessibilityRole="link" onPress={soon('Игрок')} style={{ width: 92, paddingTop: 12, paddingBottom: 10, paddingHorizontal: 6, borderRadius: 18, backgroundColor: colors.surface, alignItems: 'center', gap: 6, ...shadows.card }}>
+          <Pressable key={p.num} accessibilityRole="link" onPress={() => router.push({ pathname: '/player/[num]', params: { num: p.num } })} style={{ width: 92, paddingTop: 12, paddingBottom: 10, paddingHorizontal: 6, borderRadius: 18, backgroundColor: colors.surface, alignItems: 'center', gap: 6, ...shadows.card }}>
             <PersonAvatar who={p.who} size={52} photoHeight={230} />
             <Text size={13} lineHeight={16} weight={700} align="center">
               {p.short}

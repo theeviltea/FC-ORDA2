@@ -70,7 +70,7 @@ function Featured() {
 
 function TeamCard() {
   return (
-    <Pressable accessibilityRole="link" accessibilityLabel="Команда" onPress={soon('Команда')} style={{ marginHorizontal: 20, height: 176, borderRadius: radius.xl, overflow: 'hidden', backgroundColor: colors.surface, ...shadows.card }}>
+    <Pressable accessibilityRole="link" accessibilityLabel="Команда" onPress={() => router.push('/team')} style={{ marginHorizontal: 20, height: 176, borderRadius: radius.xl, overflow: 'hidden', backgroundColor: colors.surface, ...shadows.card }}>
       <Text display size={92} lineHeight={81} color="star" style={{ position: 'absolute', left: 110, top: -8 }} aria-hidden>
         {'TEAM\nTEAM'}
       </Text>

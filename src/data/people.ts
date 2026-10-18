@@ -20,6 +20,21 @@ export const people = {
   mToktybay: { src: require('../../assets/images/media-toktybay.webp'), ratio: 0.472, cx: 0.65 },
   naumets: { src: require('../../assets/images/people/naumets.webp'), ratio: 0.384, cx: 0.698 },
   abagna: { src: require('../../assets/images/people/abagna.webp'), ratio: 0.403, cx: 0.453 },
+  abdukhalyk: { src: require('../../assets/images/people/abdukhalyk.webp'), ratio: 0.376, cx: 0.696 },
+  maly: { src: require('../../assets/images/people/maly.webp'), ratio: 0.4, cx: 0.442 },
+  amanovich: { src: require('../../assets/images/people/amanovich.webp'), ratio: 0.438, cx: 0.521 },
+  mitkov: { src: require('../../assets/images/people/mitkov.webp'), ratio: 0.551, cx: 0.445 },
+  reshitka: { src: require('../../assets/images/people/reshitka.webp'), ratio: 0.498, cx: 0.352 },
+  zhanibekov: { src: require('../../assets/images/people/zhanibekov.webp'), ratio: 0.38, cx: 0.393 },
+  zaitsev: { src: require('../../assets/images/people/zaitsev.webp'), ratio: 0.399, cx: 0.397 },
+  romanenko: { src: require('../../assets/images/people/romanenko.webp'), ratio: 0.436, cx: 0.593 },
+  silva: { src: require('../../assets/images/people/silva.webp'), ratio: 0.503, cx: 0.568 },
+  nota: { src: require('../../assets/images/people/nota.webp'), ratio: 0.519, cx: 0.508 },
+  sabdenov: { src: require('../../assets/images/people/sabdenov.webp'), ratio: 0.407, cx: 0.441 },
+  kunkhodzhaev: { src: require('../../assets/images/people/kunkhodzhaev.webp'), ratio: 0.548, cx: 0.52 },
+  smatulla: { src: require('../../assets/images/people/smatulla.webp'), ratio: 0.492, cx: 0.551 },
+  derbisbaev: { src: require('../../assets/images/people/derbisbaev.webp'), ratio: 0.437, cx: 0.514 },
+  ergebekov: { src: require('../../assets/images/people/ergebekov.webp'), ratio: 0.492, cx: 0.537 },
 };
 
 export type PersonKey = keyof typeof people;

@@ -1,6 +1,6 @@
 import type { Person, Product } from '@/components';
 
-import { aspect, img } from './images';
+import { img } from './images';
 
 /** Mock content for the home screen (mirrors Main on the design canvas). */
 export const stories = [
@@ -47,10 +47,10 @@ export const playerOfMatch = {
 };
 
 export const squad: Person[] = [
-  { num: '10', name: 'Эльхан Астанов', role: 'Полузащитник', photo: img.playerAstanov, aspect: aspect.playerAstanov },
-  { num: '15', name: 'Жасулан Әмір', role: 'Защитник', photo: img.playerAmir, aspect: aspect.playerAmir },
-  { num: '1', name: 'Бекхан Шайзада', role: 'Вратарь', photo: img.playerShaizada, aspect: aspect.playerShaizada },
-  { num: '9', name: 'Эвертон Мораес', role: 'Нападающий', photo: img.playerMoraes, aspect: aspect.playerMoraes },
+  { num: '10', name: 'Эльхан Астанов', role: 'Полузащитник', who: 'astanov' },
+  { num: '15', name: 'Жасулан Әмір', role: 'Защитник', who: 'amir' },
+  { num: '1', name: 'Бекхан Шайзада', role: 'Вратарь', who: 'shaizada' },
+  { num: '9', name: 'Эвертон Мораес', role: 'Нападающий', who: 'moraes' },
 ];
 
 export const table = [
