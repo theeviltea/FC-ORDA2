@@ -52,6 +52,7 @@ export const img = {
   flag: require('../../assets/images/flag.webp'),
   trainingKit: require('../../assets/images/training-kit.webp'),
   jacket: require('../../assets/images/jacket.webp'),
+  trophy: require('../../assets/images/trophy.webp'),
 };
 
 /** Width / height of cut-out images, so they can be sized by height alone. */

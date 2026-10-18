@@ -20,7 +20,7 @@ export function SegmentedTabs({ labels, counts = [], active, onChange, label }: 
             accessibilityRole="tab"
             accessibilityState={{ selected: on }}
             onPress={() => onChange(i)}
-            style={{ flex: 1, height: 44, borderRadius: 12, backgroundColor: on ? colors.navy : 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 8 }}>
+            style={{ flexGrow: 1, flexShrink: 1, flexBasis: 'auto', height: 44, borderRadius: 12, backgroundColor: on ? colors.navy : 'transparent', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, paddingHorizontal: 10 }}>
             <Text size={15} weight={on ? 700 : 600} color={on ? 'surface' : 'text2'} numberOfLines={1}>
               {l}
             </Text>

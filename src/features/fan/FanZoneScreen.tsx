@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { View } from 'react-native';
 
 import { AppHeader, Carousel, IconTile, OfferBanner, PageTitle, Pressable, Screen, SectionHeader } from '@/components';
@@ -32,7 +33,7 @@ export function FanZoneScreen() {
       </View>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, paddingHorizontal: 20 }}>
         {tiles.map((t) => (
-          <IconTile key={t.title} {...t} iconSize={64} onPress={soon(t.title)} />
+          <IconTile key={t.title} {...t} iconSize={64} onPress={t.title === 'Викторины' ? () => router.push('/quizzes') : soon(t.title)} />
         ))}
       </View>
     </Screen>
