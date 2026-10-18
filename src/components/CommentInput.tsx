@@ -38,7 +38,7 @@ export function CommentInput({ onSend }: { onSend: (text: string) => void }) {
           paddingLeft: 16,
           borderRadius: long ? 22 : 26,
           backgroundColor: active ? colors.surface : colors.bg,
-          borderWidth: active ? 1.5 : 1,
+          borderWidth: 1.5,
           borderColor: active ? colors.blue : colors.line,
           boxShadow: active ? '0 0 0 4px rgba(18, 158, 217, 0.15)' : undefined,
         }}>
@@ -54,7 +54,7 @@ export function CommentInput({ onSend }: { onSend: (text: string) => void }) {
             multiline
             numberOfLines={1}
             onContentSizeChange={(e) => setH(Math.min(105, Math.max(21, e.nativeEvent.contentSize.height)))}
-            style={[{ height: text ? h : 21, marginVertical: long ? 0 : 10, fontFamily: bodyFamily[400], fontSize: 15, lineHeight: 21, color: colors.navy}, { outlineStyle: 'none' } as object]}
+            style={[{ height: text ? h : 21, marginVertical: long ? 0 : 10, fontFamily: bodyFamily[400], fontSize: 16, lineHeight: 21, color: colors.navy}, { outlineStyle: 'none' } as object]}
           />
           {long ? (
             <Text size={12} color="text2">
