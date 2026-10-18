@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "ORDA",
+    "slug": "fc-orda",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "scheme": "orda",
+    "userInterfaceStyle": "light",
+    "backgroundColor": "#F2F6FA",
+    "web": {
+      "output": "single",
+      "favicon": "./assets/images/crest.png",
+      "name": "ORDA — фан-приложение ФК «Ордабасы»",
+      "themeColor": "#172A51"
+    },
+    "plugins": [
+      "expo-router",
+      ["expo-splash-screen", { "backgroundColor": "#172A51", "image": "./assets/images/crest.png", "imageWidth": 96 }]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true,
+      "baseUrl": "/FC-ORDA2"
+    }
+  }
+}
