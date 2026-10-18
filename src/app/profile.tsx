@@ -1,26 +1,29 @@
 import { Image } from 'expo-image';
-import { router } from 'expo-router';
+import { router, type Href } from 'expo-router';
+import { useState } from 'react';
 import { View } from 'react-native';
 
-import { Button, Card, Gradient, Icon, NavBar, Pressable, Screen, SectionHeader, Star, Text, type IconName } from '@/components';
+import { Button, Card, Gradient, Icon, NavBar, Pressable, Screen, SectionHeader, Star, Text, TicketQRSheet, type IconName } from '@/components';
 import { img } from '@/data/images';
 import { soon } from '@/data/nav';
 import { fan, formatPoints } from '@/data/user';
 import { colors, radius, shadows } from '@/theme';
 
-const rows: { icon: IconName; title: string; sub: string }[] = [
-  { icon: 'champion', title: 'Мои достижения', sub: '3 получено · 2 в процессе' },
-  { icon: 'shopping-bag-02', title: 'История покупок', sub: '12 покупок' },
-  { icon: 'notification-01', title: 'Уведомления', sub: 'Матчи, новости клуба' },
-  { icon: 'settings-01', title: 'Настройки', sub: 'Данные, язык, помощь' },
+const rows: { icon: IconName; title: string; sub: string; to: Href }[] = [
+  { icon: 'champion', title: 'Мои достижения', sub: '3 получено · 2 в процессе', to: '/achievements' },
+  { icon: 'shopping-bag-02', title: 'История покупок', sub: '12 покупок', to: '/orders' },
+  { icon: 'notification-01', title: 'Уведомления', sub: 'Матчи, новости клуба', to: '/notification-settings' },
+  { icon: 'settings-01', title: 'Настройки', sub: 'Данные, язык, помощь', to: '/settings' },
 ];
 
 /** Профиль болельщика: карточка ORDA ID, баллы и уровень, ближайший билет, меню аккаунта. */
 export default function Profile() {
+  const [qr, setQr] = useState(false);
   return (
+    <>
     <Screen
       gap={16}
-      header={<NavBar title="Профиль" action={{ icon: 'settings-01', label: 'Настройки', onPress: soon('Настройки') }} />}
+      header={<NavBar title="Профиль" action={{ icon: 'settings-01', label: 'Настройки', onPress: () => router.push('/settings') }} />}
       decor={
         <View style={{ position: 'absolute', top: 0, left: 0, right: 0 }} pointerEvents="none">
           <Star w={80} style={{ top: 560, right: -20 }} />
@@ -93,7 +96,7 @@ export default function Profile() {
       </Card>
 
       <View style={{ marginTop: 8 }}>
-        <SectionHeader title="Мои билеты" link="Все" onPress={soon('Мои билеты')} />
+        <SectionHeader title="Мои билеты" link="Все" onPress={() => router.push('/my-tickets')} />
       </View>
       <Card accent style={{ marginHorizontal: 20, padding: 16, gap: 14 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
@@ -109,7 +112,7 @@ export default function Profile() {
             <Icon name="bar-code-01" size={24} />
           </View>
         </View>
-        <Button label="Показать QR-код" icon="qr-code" onPress={soon('QR-код билета')} />
+        <Button label="Показать QR-код" icon="qr-code" onPress={() => setQr(true)} />
       </Card>
 
       <View style={{ marginTop: 8 }}>
@@ -120,7 +123,7 @@ export default function Profile() {
           <Pressable
             key={r.title}
             accessibilityRole="link"
-            onPress={r.title === 'История покупок' ? () => router.push('/orders') : soon(r.title)}
+            onPress={() => router.push(r.to)}
             style={{ flexDirection: 'row', alignItems: 'center', gap: 14, minHeight: 64, paddingVertical: 10, borderBottomWidth: i < rows.length - 1 ? 1 : 0, borderColor: colors.surfaceSunken }}>
             <View style={{ width: 40, height: 40, borderRadius: 12, backgroundColor: colors.blue10, alignItems: 'center', justifyContent: 'center' }}>
               <Icon name={r.icon} size={22} color="blue" weight={1.6} />
@@ -143,5 +146,7 @@ export default function Profile() {
         Баллы и билеты сохранятся в вашем ORDA ID
       </Text>
     </Screen>
+    <TicketQRSheet visible={qr} onClose={() => setQr(false)} />
+    </>
   );
 }

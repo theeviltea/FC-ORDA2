@@ -4,7 +4,6 @@ import { View } from 'react-native';
 
 import { fan, formatPoints } from '@/data/user';
 import { img } from '@/data/images';
-import { soon } from '@/data/nav';
 import { colors, shadows } from '@/theme';
 
 import { Icon } from './Icon';
@@ -37,7 +36,7 @@ export function AppHeader() {
       <Pressable
         accessibilityRole="button"
         accessibilityLabel={`Уведомления, ${fan.unread} новых`}
-        onPress={soon('Уведомления')}
+        onPress={() => router.push('/inbox')}
         style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
         <Icon name="notification-01" size={24} />
         <View style={{ position: 'absolute', top: 4, right: 2, minWidth: 20, height: 20, paddingHorizontal: 4, borderRadius: 10, backgroundColor: colors.red, borderWidth: 2, borderColor: colors.bg, alignItems: 'center', justifyContent: 'center' }}>

@@ -1,5 +1,6 @@
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
@@ -19,6 +20,7 @@ import {
   SectionHeader,
   Star,
   Text,
+  TicketQRSheet,
 } from '@/components';
 import { img } from '@/data/images';
 import { news, nextMatch, nextTicket, playerOfMatch, products, sponsors, squad, stories, table, videos } from '@/data/home';
@@ -113,9 +115,10 @@ function StoryCover({ cover }: { cover: number }) {
 }
 
 function TicketSoon() {
+  const [qr, setQr] = useState(false);
   return (
     <View style={{ gap: 12, paddingHorizontal: 20 }}>
-      <SectionHeader title="Скоро" link="Мои билеты" onPress={soon('Мои билеты')} inset={false} />
+      <SectionHeader title="Скоро" link="Мои билеты" onPress={() => router.push('/my-tickets')} inset={false} />
       <Card accent style={{ padding: 16, gap: 14 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
           <View style={{ flex: 1, gap: 2 }}>
@@ -130,8 +133,9 @@ function TicketSoon() {
             <Icon name="bar-code-01" size={24} />
           </View>
         </View>
-        <Button label="Показать QR-код" icon="qr-code" onPress={soon('QR-код билета')} />
+        <Button label="Показать QR-код" icon="qr-code" onPress={() => setQr(true)} />
       </Card>
+      <TicketQRSheet visible={qr} onClose={() => setQr(false)} />
     </View>
   );
 }

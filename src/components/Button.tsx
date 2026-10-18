@@ -6,11 +6,12 @@ import { Icon, type IconName } from './Icon';
 import { Pressable } from './Pressable';
 import { Text } from './Text';
 
-type Variant = 'primary' | 'white' | 'outlineDanger';
+type Variant = 'primary' | 'white' | 'soft' | 'outlineDanger';
 
 const look: Record<Variant, { bg: string; fg: string; border?: string }> = {
   primary: { bg: colors.blue600, fg: colors.surface },
   white: { bg: colors.surface, fg: colors.navy },
+  soft: { bg: colors.blue10, fg: colors.blue600 },
   outlineDanger: { bg: colors.surface, fg: colors.errorText, border: colors.line },
 };
 
