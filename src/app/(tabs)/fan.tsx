@@ -1,5 +1,5 @@
-import { TabStub } from '@/features/stub/TabStub';
+import { FanZoneScreen } from '@/features/fan/FanZoneScreen';
 
 export default function Tab() {
-  return <TabStub title="Фан-зона" />;
+  return <FanZoneScreen />;
 }

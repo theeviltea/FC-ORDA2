@@ -1,7 +1,5 @@
 import { Image } from 'expo-image';
-import { View } from 'react-native';
-
-import { AppHeader, Gradient, Screen, Star, Text } from '@/components';
+import { Gradient, Star, Text } from '@/components';
 import { img } from '@/data/images';
 import { colors, radius } from '@/theme';
 
@@ -22,20 +20,5 @@ export function ComingSoon() {
         Экран уже нарисован в дизайне — переносим его в приложение следующим шагом.
       </Text>
     </Gradient>
-  );
-}
-
-/** Tab that is not built yet: keeps the app header and the tab bar working. */
-export function TabStub({ title }: { title: string }) {
-  return (
-    <Screen tabs gap={16}>
-      <AppHeader />
-      <View style={{ paddingHorizontal: 20 }}>
-        <Text display size={32} lineHeight={36}>
-          {title}
-        </Text>
-      </View>
-      <ComingSoon />
-    </Screen>
   );
 }

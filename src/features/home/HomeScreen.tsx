@@ -1,6 +1,5 @@
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
-import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import Svg, { Circle } from 'react-native-svg';
 
@@ -24,15 +23,15 @@ import {
 import { img } from '@/data/images';
 import { news, nextMatch, nextTicket, playerOfMatch, products, sponsors, squad, stories, table, videos } from '@/data/home';
 import { soon } from '@/data/nav';
+import { useCountdown } from '@/hooks/useCountdown';
 import { colors, gradients, radius, shadows } from '@/theme';
-
-const pad = (n: number) => String(n).padStart(2, '0');
 
 /** Главная. `guest` = signed-out zone: GuestHeader + «Стань частью ORDA» instead of the profile header. */
 export function HomeScreen({ guest }: { guest?: boolean }) {
   return (
     <Screen
       tabs
+      header={guest ? <GuestHeader /> : <AppHeader />}
       decor={
         <View style={{ position: 'absolute', top: 0, left: 0, right: 0 }} pointerEvents="none">
           <Star w={64} style={{ top: 470, left: 300 }} />
@@ -41,15 +40,8 @@ export function HomeScreen({ guest }: { guest?: boolean }) {
           <Star w={48} style={{ top: 1960, left: 320 }} />
         </View>
       }>
-      {guest ? (
-        <View style={{ gap: 0 }}>
-          <GuestHeader />
-          <JoinBanner />
-        </View>
-      ) : (
-        <AppHeader />
-      )}
-      <Stories />
+      {guest ? <JoinBanner /> : null}
+      <Stories guest={guest} />
       {guest ? null : <TicketSoon />}
       <NextMatch />
       <ForYou />
@@ -66,7 +58,7 @@ export function HomeScreen({ guest }: { guest?: boolean }) {
 
 function JoinBanner() {
   return (
-    <Pressable accessibilityRole="link" onPress={soon('Регистрация')} style={{ marginHorizontal: 20, marginTop: 4 }}>
+    <Pressable accessibilityRole="link" onPress={soon('Регистрация')} style={{ marginHorizontal: 20 }}>
       <Gradient style={{ borderRadius: radius.l, overflow: 'hidden', padding: 16, paddingRight: 116, gap: 6 }}>
         <Star w={14} fill={colors.sky} style={{ right: 120, top: 14 }} />
         <Image source={img.coin} style={{ position: 'absolute', right: 14, top: '50%', marginTop: -42, width: 84, height: 84 }} contentFit="contain" />
@@ -86,9 +78,9 @@ function JoinBanner() {
   );
 }
 
-function Stories() {
+function Stories({ guest }: { guest?: boolean }) {
   return (
-    <View style={{ marginTop: -12 }}>
+    <View style={{ marginTop: guest ? -8 : -12 }}>
       <Carousel gap={14}>
         {stories.map((s) => (
           <Pressable key={s.label} accessibilityRole="button" accessibilityLabel={`История: ${s.label}`} onPress={soon('Истории')} style={{ width: 76, alignItems: 'center', gap: 6 }}>
@@ -142,20 +134,6 @@ function TicketSoon() {
       </Card>
     </View>
   );
-}
-
-function useCountdown(seconds: number) {
-  const [left, setLeft] = useState(seconds);
-  useEffect(() => {
-    const t = setInterval(() => setLeft((s) => Math.max(0, s - 1)), 1000);
-    return () => clearInterval(t);
-  }, []);
-  return [
-    { v: pad(Math.floor(left / 86400)), u: 'дн' },
-    { v: pad(Math.floor((left % 86400) / 3600)), u: 'час' },
-    { v: pad(Math.floor((left % 3600) / 60)), u: 'мин' },
-    { v: pad(left % 60), u: 'сек' },
-  ];
 }
 
 function Club({ name, logo }: { name: string; logo: number }) {

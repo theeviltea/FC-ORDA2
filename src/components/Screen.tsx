@@ -1,17 +1,47 @@
-import type { ReactNode } from 'react';
+import { useState, type ReactNode } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors } from '@/theme';
 
-/** Scrollable screen on the brand background. `tabs` leaves room for the floating tab bar. */
-export function Screen({ children, tabs, gap = 28, decor }: { children: ReactNode; tabs?: boolean; gap?: number; decor?: ReactNode }) {
+type Props = {
+  children: ReactNode;
+  /** Header pinned to the top (AppHeader / GuestHeader / NavBar); content scrolls under it. */
+  header?: ReactNode;
+  /** Leaves room for the floating tab bar. */
+  tabs?: boolean;
+  gap?: number;
+  /** Decorative layer that scrolls with the content (brand stars). */
+  decor?: ReactNode;
+};
+
+/** Screen on the brand background: fixed header on top, scrollable content below. */
+export function Screen({ children, header, tabs, gap = 28, decor }: Props) {
   const insets = useSafeAreaInsets();
+  const [scrolled, setScrolled] = useState(false);
   return (
     <View style={{ flex: 1, backgroundColor: colors.bg }}>
+      {header ? (
+        <View
+          style={{
+            paddingTop: insets.top + 8,
+            backgroundColor: colors.bg,
+            zIndex: 10,
+            borderBottomWidth: 1,
+            borderColor: scrolled ? colors.line : 'transparent',
+            boxShadow: scrolled ? '0 6px 16px rgba(23, 42, 81, 0.06)' : undefined,
+          }}>
+          {header}
+        </View>
+      ) : null}
       <ScrollView
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingTop: insets.top + 8, paddingBottom: (tabs ? 110 : 40) + insets.bottom, gap }}>
+        scrollEventThrottle={32}
+        onScroll={(e) => {
+          const s = e.nativeEvent.contentOffset.y > 2;
+          if (s !== scrolled) setScrolled(s);
+        }}
+        contentContainerStyle={{ paddingTop: header ? 8 : insets.top + 8, paddingBottom: (tabs ? 110 : 40) + insets.bottom, gap }}>
         {decor}
         {children}
       </ScrollView>

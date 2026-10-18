@@ -1,5 +1,5 @@
-import { TabStub } from '@/features/stub/TabStub';
+import { MediaScreen } from '@/features/media/MediaScreen';
 
 export default function Tab() {
-  return <TabStub title="Медиа" />;
+  return <MediaScreen />;
 }

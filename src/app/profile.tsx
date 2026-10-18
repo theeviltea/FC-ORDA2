@@ -20,14 +20,13 @@ export default function Profile() {
   return (
     <Screen
       gap={16}
+      header={<NavBar title="Профиль" action={{ icon: 'settings-01', label: 'Настройки', onPress: soon('Настройки') }} />}
       decor={
         <View style={{ position: 'absolute', top: 0, left: 0, right: 0 }} pointerEvents="none">
           <Star w={80} style={{ top: 560, right: -20 }} />
           <Star w={44} style={{ top: 980, left: 12 }} />
         </View>
       }>
-      <NavBar title="Профиль" action={{ icon: 'settings-01', label: 'Настройки', onPress: soon('Настройки') }} />
-
       <Gradient style={{ marginHorizontal: 20, paddingTop: 24, paddingHorizontal: 16, paddingBottom: 20, borderRadius: radius.xl, overflow: 'hidden', alignItems: 'center', gap: 10, ...shadows.raised }}>
         <Text display size={120} lineHeight={103} color="rgba(255,255,255,0.07)" style={{ position: 'absolute', left: -6, top: -10 }} aria-hidden>
           {'ORDA\nFAN'}

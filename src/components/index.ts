@@ -14,3 +14,6 @@ export * from './SectionHeader';
 export * from './Star';
 export * from './TabBar';
 export * from './Text';
+export * from './IconTile';
+export * from './PageTitle';
+export * from './SegmentedTabs';

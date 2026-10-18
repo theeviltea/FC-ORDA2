@@ -1,5 +1,5 @@
-import { TabStub } from '@/features/stub/TabStub';
+import { MatchesScreen } from '@/features/matches/MatchesScreen';
 
 export default function Tab() {
-  return <TabStub title="Матчи" />;
+  return <MatchesScreen />;
 }

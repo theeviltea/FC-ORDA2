@@ -1,5 +1,5 @@
-import { TabStub } from '@/features/stub/TabStub';
+import { ShopScreen } from '@/features/shop/ShopScreen';
 
 export default function Tab() {
-  return <TabStub title="Магазин" />;
+  return <ShopScreen />;
 }

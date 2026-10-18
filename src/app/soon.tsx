@@ -7,8 +7,7 @@ import { ComingSoon } from '@/features/stub/TabStub';
 export default function Soon() {
   const { title } = useLocalSearchParams<{ title?: string }>();
   return (
-    <Screen gap={16}>
-      <NavBar title={title ?? 'Скоро'} />
+    <Screen gap={16} header={<NavBar title={title ?? 'Скоро'} />}>
       <ComingSoon />
     </Screen>
   );
