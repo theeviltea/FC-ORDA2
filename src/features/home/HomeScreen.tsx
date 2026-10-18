@@ -80,7 +80,7 @@ function JoinBanner() {
 
 function Stories({ guest }: { guest?: boolean }) {
   return (
-    <View style={{ marginTop: guest ? -8 : -12 }}>
+    <View style={{ marginTop: guest ? -8 : 4 }}>
       <Carousel gap={14}>
         {stories.map((s) => (
           <Pressable key={s.label} accessibilityRole="button" accessibilityLabel={`История: ${s.label}`} onPress={soon('Истории')} style={{ width: 76, alignItems: 'center', gap: 6 }}>
