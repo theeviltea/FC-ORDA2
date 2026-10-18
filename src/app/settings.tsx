@@ -3,9 +3,11 @@ import { View } from 'react-native';
 
 import { ListCard, NavBar, Screen, SectionHeader, Star } from '@/components';
 import { soon } from '@/data/nav';
+import { languages, usePrefs } from '@/data/prefs';
 
 /** Настройки: аккаунт, уведомления, язык, помощь. */
 export default function Settings() {
+  const { lang } = usePrefs();
   const section = (title: string, rows: Parameters<typeof ListCard>[0]['rows']) => (
     <View style={{ gap: 12, marginTop: 8 }}>
       <SectionHeader title={title} />
@@ -22,13 +24,13 @@ export default function Settings() {
         </View>
       }>
       {section('Аккаунт', [
-        { icon: 'user', title: 'Личные данные', sub: 'Имя, телефон и почта', onPress: soon('Личные данные') },
+        { icon: 'user', title: 'Личные данные', sub: 'Имя, телефон и почта', onPress: () => router.push('/personal') },
         { icon: 'shield-01', title: 'Безопасность', sub: 'Пароль и вход', onPress: soon('Безопасность') },
         { icon: 'notification-01', title: 'Уведомления', sub: 'Матчи, новости клуба', onPress: () => router.push('/notification-settings') },
       ])}
-      {section('Язык', [{ icon: 'translate', title: 'Язык приложения', sub: 'Русский', onPress: soon('Язык') }])}
+      {section('Язык', [{ icon: 'translate', title: 'Язык приложения', sub: languages.find((l) => l.id === lang)!.name, onPress: () => router.push('/language') }])}
       {section('Помощь', [
-        { icon: 'customer-support', title: 'Центр поддержки', sub: 'Ответим в течение часа', onPress: soon('Центр поддержки') },
+        { icon: 'customer-support', title: 'Центр поддержки', sub: 'Ответим в течение часа', onPress: () => router.push('/support') },
         { icon: 'smart-phone-01', title: 'О приложении', sub: 'Версия 1.0.0', onPress: soon('О приложении') },
       ])}
     </Screen>

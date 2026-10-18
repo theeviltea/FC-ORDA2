@@ -5,7 +5,7 @@ import { View } from 'react-native';
 
 import { Button, Card, Gradient, Icon, NavBar, Pressable, Screen, SectionHeader, Star, Text, TicketQRSheet, type IconName } from '@/components';
 import { img } from '@/data/images';
-import { soon } from '@/data/nav';
+import { usePrefs } from '@/data/prefs';
 import { fan, formatPoints } from '@/data/user';
 import { colors, radius, shadows } from '@/theme';
 
@@ -19,6 +19,7 @@ const rows: { icon: IconName; title: string; sub: string; to: Href }[] = [
 /** Профиль болельщика: карточка ORDA ID, баллы и уровень, ближайший билет, меню аккаунта. */
 export default function Profile() {
   const [qr, setQr] = useState(false);
+  const { personal } = usePrefs();
   return (
     <>
     <Screen
@@ -47,12 +48,12 @@ export default function Profile() {
           </View>
         </View>
         <Text display size={32} lineHeight={32} upper color="surface" style={{ marginTop: 2, letterSpacing: 0.6 }}>
-          {fan.name}
+          {personal.first}
         </Text>
         <Text size={14} color="onDark2">
           ORDA ID {fan.ordaId} · болельщик с {fan.since}
         </Text>
-        <Pressable accessibilityRole="button" onPress={soon('Личные данные')} style={{ height: 36, paddingHorizontal: 14, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.14)', flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+        <Pressable accessibilityRole="button" onPress={() => router.push('/personal')} style={{ height: 36, paddingHorizontal: 14, borderRadius: 18, backgroundColor: 'rgba(255,255,255,0.14)', flexDirection: 'row', alignItems: 'center', gap: 6 }}>
           <Icon name="user" size={16} color="surface" weight={1.8} />
           <Text size={14} weight={700} color="surface">
             Редактировать
