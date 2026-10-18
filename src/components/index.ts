@@ -22,3 +22,4 @@ export * from './PersonAvatar';
 export * from './Pitch';
 export * from './Comment';
 export * from './CommentInput';
+export * from './QuantityStepper';

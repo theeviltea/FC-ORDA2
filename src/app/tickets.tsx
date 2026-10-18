@@ -4,7 +4,7 @@ import { useState, type ReactNode } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button, Card, Gradient, Icon, NavBar, Pitch, Pressable, Screen, Star, Text } from '@/components';
+import { Button, Card, Gradient, Icon, NavBar, Pitch, Pressable, QuantityStepper, Screen, Star, Text } from '@/components';
 import { img } from '@/data/images';
 import { tenge } from '@/data/shop';
 import { colors, radius } from '@/theme';
@@ -61,23 +61,6 @@ function Legend({ color, border, children }: { color: string; border?: string; c
       <Text size={12} color="text2">
         {children}
       </Text>
-    </View>
-  );
-}
-
-function Stepper({ value, onChange }: { value: number; onChange: (n: number) => void }) {
-  const btn = (icon: 'minus-sign' | 'add-01', label: string, next: number, off: boolean) => (
-    <Pressable accessibilityRole="button" accessibilityLabel={label} disabled={off} onPress={() => onChange(next)} style={{ width: 40, height: 40, borderRadius: 12, backgroundColor: colors.surface, alignItems: 'center', justifyContent: 'center', boxShadow: '0 1px 4px rgba(23, 42, 81, 0.08)' }}>
-      <Icon name={icon} size={18} color={off ? 'text3' : 'text'} weight={2} />
-    </Pressable>
-  );
-  return (
-    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4, padding: 4, borderRadius: 16, backgroundColor: colors.bg }}>
-      {btn('minus-sign', 'Меньше', value - 1, value <= 1)}
-      <Text display size={22} align="center" style={{ minWidth: 44 }}>
-        {value}
-      </Text>
-      {btn('add-01', 'Больше', value + 1, value >= MAX)}
     </View>
   );
 }
@@ -207,7 +190,7 @@ export default function Tickets() {
           <Text size={15} weight={600}>
             Количество
           </Text>
-          <Stepper value={qty} onChange={setQty} />
+          <QuantityStepper value={qty} onChange={setQty} min={1} max={MAX} label="Количество билетов" />
         </View>
         <Text size={13} lineHeight={18} color="text2">
           Не больше 6 билетов на один аккаунт. Билеты появятся в разделе «Мои билеты».

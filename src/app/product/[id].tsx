@@ -4,7 +4,7 @@ import { useState, type ReactNode } from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { Button, Card, Gradient, Icon, NavBar, Pressable, ProductCard, Screen, Star, Text, TextField } from '@/components';
+import { Button, Card, Gradient, Icon, NavBar, Pressable, ProductCard, QuantityStepper, Screen, Star, Text, TextField } from '@/components';
 import { aspect, img } from '@/data/images';
 import { findItem, promoCodes, tenge } from '@/data/shop';
 import { colors, radius, shadows } from '@/theme';
@@ -250,21 +250,7 @@ export default function ProductScreen() {
             </View>
             <View style={{ gap: 10, alignItems: 'flex-end' }}>
               <Label>Количество</Label>
-              <View style={{ flexDirection: 'row', alignItems: 'center', height: 44, borderRadius: 12, backgroundColor: colors.surfaceSunken }}>
-                <Pressable accessibilityRole="button" accessibilityLabel="Меньше" onPress={() => setQty(Math.max(1, qty - 1))} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
-                  <Text size={22} weight={600}>
-                    −
-                  </Text>
-                </Pressable>
-                <Text size={17} weight={700} align="center" style={{ minWidth: 20 }}>
-                  {qty}
-                </Text>
-                <Pressable accessibilityRole="button" accessibilityLabel="Больше" onPress={() => setQty(Math.min(9, qty + 1))} style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
-                  <Text size={22} weight={600}>
-                    +
-                  </Text>
-                </Pressable>
-              </View>
+              <QuantityStepper value={qty} onChange={setQty} min={1} max={9} label="Количество товара" />
             </View>
           </View>
         </Card>
