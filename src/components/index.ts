@@ -20,3 +20,5 @@ export * from './SegmentedTabs';
 export * from './TextField';
 export * from './PersonAvatar';
 export * from './Pitch';
+export * from './Comment';
+export * from './CommentInput';

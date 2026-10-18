@@ -16,19 +16,23 @@ type Props = {
   /** Bar pinned to the bottom (e.g. «Купить»); `footerHeight` reserves room for it. */
   footer?: ReactNode;
   footerHeight?: number;
+  /** Page background. */
+  bg?: string;
+  /** Header background when it differs from the page (white on articles). */
+  headerBg?: string;
 };
 
 /** Screen on the brand background: fixed header on top, scrollable content below. */
-export function Screen({ children, header, tabs, gap = 28, decor, footer, footerHeight = 0 }: Props) {
+export function Screen({ children, header, tabs, gap = 28, decor, footer, footerHeight = 0, bg = colors.bg, headerBg }: Props) {
   const insets = useSafeAreaInsets();
   const [scrolled, setScrolled] = useState(false);
   return (
-    <View style={{ flex: 1, backgroundColor: colors.bg }}>
+    <View style={{ flex: 1, backgroundColor: bg }}>
       {header ? (
         <View
           style={{
             paddingTop: insets.top + 8,
-            backgroundColor: colors.bg,
+            backgroundColor: headerBg ?? bg,
             zIndex: 10,
             borderBottomWidth: 1,
             borderColor: scrolled ? colors.line : 'transparent',

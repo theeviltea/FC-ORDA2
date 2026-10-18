@@ -405,10 +405,10 @@ function Table() {
 function News() {
   return (
     <View style={{ gap: 12, paddingHorizontal: 20 }}>
-      <SectionHeader title="Новости клуба" link="Все" onPress={() => router.navigate('/media')} inset={false} />
+      <SectionHeader title="Новости клуба" link="Все" onPress={() => router.push('/news')} inset={false} />
       <View style={{ gap: 10 }}>
         {news.map((n) => (
-          <Pressable key={n.title} accessibilityRole="link" onPress={soon('Новость')} style={{ flexDirection: 'row', alignItems: 'center', gap: 14, padding: 10, borderRadius: radius.l, backgroundColor: colors.surface, ...shadows.card }}>
+          <Pressable key={n.id} accessibilityRole="link" onPress={() => router.push({ pathname: '/news/[id]', params: { id: n.id } })} style={{ flexDirection: 'row', alignItems: 'center', gap: 14, padding: 10, borderRadius: radius.l, backgroundColor: colors.surface, ...shadows.card }}>
             <Image source={n.img} style={{ width: 76, height: 76, borderRadius: 14 }} contentFit="cover" />
             <View style={{ flex: 1, gap: 4 }}>
               <Text size={16} weight={700} lineHeight={20}>

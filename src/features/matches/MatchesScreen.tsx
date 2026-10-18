@@ -298,7 +298,7 @@ function Results() {
               </View>
             );
             return (
-              <Pressable key={m.round} accessibilityRole="link" onPress={soon('Обзор матча')} style={{ padding: 14, borderRadius: radius.l, backgroundColor: colors.surface, gap: 10, ...shadows.card }}>
+              <Pressable key={m.round} accessibilityRole="link" onPress={() => router.push({ pathname: '/news/[id]', params: { id: 'leaders' } })} style={{ padding: 14, borderRadius: radius.l, backgroundColor: colors.surface, gap: 10, ...shadows.card }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                   <Text size={13} color="text2">
                     {m.round} · {m.date}

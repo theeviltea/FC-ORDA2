@@ -60,9 +60,9 @@ export const table = [
 ];
 
 export const news = [
-  { title: 'Состав на матч с «Кайратом» объявлен', meta: 'Сегодня · Команда', img: img.newsLineup },
-  { title: 'Новая домашняя форма представлена', meta: 'Вчера · Клуб', img: img.newsTrio },
-  { title: 'Новый нападающий подписал контракт с клубом', meta: '31 июля · Клуб', img: img.newsShout },
+  { id: 'lineup', title: 'Состав на матч с «Кайратом» объявлен', meta: 'Сегодня · Команда', img: img.newsLineup },
+  { id: 'kit', title: 'Новая домашняя форма представлена', meta: 'Вчера · Клуб', img: img.newsTrio },
+  { id: 'striker', title: 'Новый нападающий подписал контракт с клубом', meta: '31 июля · Клуб', img: img.newsShout },
 ];
 
 /** Club partners. Integra goes first (wide tile); new partners are appended to the grid. */

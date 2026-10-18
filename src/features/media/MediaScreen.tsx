@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { Image } from 'expo-image';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -8,9 +9,9 @@ import { soon } from '@/data/nav';
 import { colors, radius, shadows } from '@/theme';
 
 const slides = [
-  { tag: 'Матч', title: '«Ордабасы» сохранил лидерство и завершил первый круг на вершине таблицы', date: '18 мая 2025', alt: 'Игроки «Ордабасы» празднуют гол', photo: img.videoGoal, pos: { left: '40%' } },
-  { tag: 'Команда', title: 'Состав на матч с «Кайратом» объявлен', date: 'Сегодня', alt: 'Команда перед матчем', photo: img.newsLineup, pos: { top: '30%' } },
-  { tag: 'Клуб', title: 'Новый нападающий подписал контракт с клубом', date: '31 июля', alt: 'Игроки «Ордабасы» на поле', photo: img.newsShout, pos: { left: '45%' } },
+  { id: 'leaders', tag: 'Матч', title: '«Ордабасы» сохранил лидерство и завершил первый круг на вершине таблицы', date: '18 мая 2025', alt: 'Игроки «Ордабасы» празднуют гол', photo: img.videoGoal, pos: { left: '40%' } },
+  { id: 'lineup', tag: 'Команда', title: 'Состав на матч с «Кайратом» объявлен', date: 'Сегодня', alt: 'Команда перед матчем', photo: img.newsLineup, pos: { top: '30%' } },
+  { id: 'striker', tag: 'Клуб', title: 'Новый нападающий подписал контракт с клубом', date: '31 июля', alt: 'Игроки «Ордабасы» на поле', photo: img.newsShout, pos: { left: '45%' } },
 ];
 
 const tiles = [
@@ -31,7 +32,7 @@ function Featured() {
       <Image source={s.photo} accessibilityLabel={s.alt} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} contentFit="cover" contentPosition={s.pos} transition={200} />
       <Gradient colors={['rgba(23,42,81,0.35)', 'rgba(23,42,81,0)']} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 120 }} />
       <Gradient colors={['rgba(23,42,81,0)', 'rgba(23,42,81,0.78)', colors.navy]} style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 260 }} />
-      <Pressable accessibilityRole="link" onPress={soon('Новость')} style={{ position: 'absolute', left: 18, right: 18, bottom: 76, gap: 8 }}>
+      <Pressable accessibilityRole="link" onPress={() => router.push({ pathname: '/news/[id]', params: { id: s.id } })} style={{ position: 'absolute', left: 18, right: 18, bottom: 76, gap: 8 }}>
         <View style={{ alignSelf: 'flex-start', height: 24, paddingHorizontal: 10, borderRadius: 12, backgroundColor: colors.surface, justifyContent: 'center' }}>
           <Text size={12} lineHeight={14} weight={700}>
             {s.tag}
@@ -100,7 +101,7 @@ export function MediaScreen() {
     <Screen tabs gap={16} header={<AppHeader />}>
       <PageTitle>Медиацентр</PageTitle>
       <View style={{ marginBottom: -4 }}>
-        <SectionHeader title="Главное" link="Все новости" onPress={soon('Новости')} />
+        <SectionHeader title="Главное" link="Все новости" onPress={() => router.push('/news')} />
       </View>
       <Featured />
       <TeamCard />
