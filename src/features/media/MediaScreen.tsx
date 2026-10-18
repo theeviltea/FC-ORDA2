@@ -8,9 +8,9 @@ import { soon } from '@/data/nav';
 import { colors, radius, shadows } from '@/theme';
 
 const slides = [
-  { tag: 'Матч', title: '«Ордабасы» сохранил лидерство и завершил первый круг на вершине таблицы', date: '18 мая 2025', player: 'Султанбек Астанов', photo: img.mediaAstanov, ratio: aspect.mediaAstanov },
-  { tag: 'Команда', title: 'Состав на матч с «Кайратом» объявлен', date: 'Сегодня', player: 'Магжан Токтыбай', photo: img.mediaToktybay, ratio: aspect.mediaToktybay },
-  { tag: 'Клуб', title: 'Новый нападающий подписал контракт с клубом', date: '31 июля', player: 'Леонардо Натель', photo: img.mediaNatel, ratio: aspect.mediaNatel },
+  { tag: 'Матч', title: '«Ордабасы» сохранил лидерство и завершил первый круг на вершине таблицы', date: '18 мая 2025', alt: 'Игроки «Ордабасы» празднуют гол', photo: img.videoGoal, pos: { left: '40%' } },
+  { tag: 'Команда', title: 'Состав на матч с «Кайратом» объявлен', date: 'Сегодня', alt: 'Команда перед матчем', photo: img.newsLineup, pos: { top: '30%' } },
+  { tag: 'Клуб', title: 'Новый нападающий подписал контракт с клубом', date: '31 июля', alt: 'Игроки «Ордабасы» на поле', photo: img.newsShout, pos: { left: '45%' } },
 ];
 
 const tiles = [
@@ -26,19 +26,11 @@ function Featured() {
   const [i, setI] = useState(0);
   const n = slides.length;
   const s = slides[i];
-  const ph = 560;
   return (
     <Gradient style={{ marginHorizontal: 20, height: 400, borderRadius: radius.xl, overflow: 'hidden' }}>
-      <Text display size={98} lineHeight={86} color="rgba(255,255,255,0.12)" style={{ position: 'absolute', left: 14, top: 6 }} aria-hidden>
-        {'MATCH\nDAY\nMATCH\nDAY'}
-      </Text>
-      <Star w={44} h={72} fill={colors.bg} style={{ left: -22, top: 128 }} />
-      <Star w={44} h={72} fill={colors.bg} style={{ right: -22, top: 58 }} />
-      <Star w={18} fill={colors.surface} style={{ left: 34, top: 196 }} />
-      <Star w={12} fill={colors.sky} style={{ left: 150, top: 46 }} />
-      <Star w={26} fill={colors.surface} style={{ right: 22, top: 150 }} />
-      <Image source={s.photo} accessibilityLabel={s.player} style={{ position: 'absolute', right: -16, top: 18, height: ph, width: ph * s.ratio }} />
-      <Gradient colors={['rgba(23,42,81,0)', 'rgba(23,42,81,0.78)', colors.navy]} style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 230 }} />
+      <Image source={s.photo} accessibilityLabel={s.alt} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} contentFit="cover" contentPosition={s.pos} transition={200} />
+      <Gradient colors={['rgba(23,42,81,0.35)', 'rgba(23,42,81,0)']} style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 120 }} />
+      <Gradient colors={['rgba(23,42,81,0)', 'rgba(23,42,81,0.78)', colors.navy]} style={{ position: 'absolute', left: 0, right: 0, bottom: 0, height: 260 }} />
       <Pressable accessibilityRole="link" onPress={soon('Новость')} style={{ position: 'absolute', left: 18, right: 18, bottom: 76, gap: 8 }}>
         <View style={{ alignSelf: 'flex-start', height: 24, paddingHorizontal: 10, borderRadius: 12, backgroundColor: colors.surface, justifyContent: 'center' }}>
           <Text size={12} lineHeight={14} weight={700}>
@@ -102,7 +94,7 @@ function TeamCard() {
   );
 }
 
-/** Медиацентр: главные материалы (карусель), команда, разделы медиа. */
+/** Медиацентр: главные материалы (карусель топ-новостей на фото), команда, разделы медиа. */
 export function MediaScreen() {
   return (
     <Screen tabs gap={16} header={<AppHeader />}>
