@@ -12,10 +12,10 @@ import { Text } from './Text';
 /** Header of the guest (signed-out) zone: club crest + ORDA wordmark, «Войти» on the right. */
 export function GuestHeader() {
   return (
-    <View style={{ paddingHorizontal: 20, paddingVertical: 12, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+    <View style={{ height: 48, paddingHorizontal: 20, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
       <View accessibilityLabel="ФК «Ордабасы»" style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-        <View style={{ width: 40, height: 40, borderRadius: 20, backgroundColor: colors.surface, alignItems: 'center', justifyContent: 'center', ...shadows.avatar }}>
-          <Image source={img.crest} style={{ width: 26, height: 32 }} contentFit="contain" />
+        <View style={{ width: 36, height: 36, borderRadius: 18, backgroundColor: colors.surface, alignItems: 'center', justifyContent: 'center', ...shadows.avatar }}>
+          <Image source={img.crest} style={{ width: 22, height: 28 }} contentFit="contain" />
         </View>
         <Text display size={22} style={{ letterSpacing: 0.9 }}>
           ORDA
@@ -25,7 +25,7 @@ export function GuestHeader() {
       <Pressable
         accessibilityRole="button"
         onPress={soon('Вход')}
-        style={{ height: 40, paddingLeft: 12, paddingRight: 16, borderRadius: 20, backgroundColor: colors.blue600, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+        style={{ height: 36, paddingLeft: 10, paddingRight: 14, borderRadius: 18, backgroundColor: colors.blue600, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
         <Icon name="user-circle" size={20} color="surface" weight={1.8} />
         <Text size={15} weight={700} color="surface">
           Войти

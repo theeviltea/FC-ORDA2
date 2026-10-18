@@ -14,16 +14,16 @@ import { Text } from './Text';
 /** Top-level header: avatar + name + points on the left, notifications bell on the right. */
 export function AppHeader() {
   return (
-    <View style={{ paddingHorizontal: 20, paddingVertical: 12, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+    <View style={{ height: 48, paddingLeft: 20, paddingRight: 12, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
       <Pressable
         accessibilityRole="link"
         accessibilityLabel="Профиль"
         onPress={() => router.push('/profile')}
         style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <View style={{ width: 44, height: 44, borderRadius: 22, borderWidth: 2, borderColor: colors.surface, overflow: 'hidden', backgroundColor: colors.blue10, ...shadows.avatar }}>
-          <Image source={img.avatar} style={{ width: 40, height: 40 }} />
+        <View style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 2, borderColor: colors.surface, overflow: 'hidden', backgroundColor: colors.blue10, ...shadows.avatar }}>
+          <Image source={img.avatar} style={{ width: 36, height: 36 }} />
         </View>
-        <Text size={18} weight={700}>
+        <Text size={17} weight={700}>
           {fan.name}
         </Text>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, height: 28, paddingLeft: 4, paddingRight: 10, borderRadius: 14, borderWidth: 1.5, borderColor: colors.blue, backgroundColor: colors.surface }}>
@@ -39,8 +39,8 @@ export function AppHeader() {
         accessibilityLabel={`Уведомления, ${fan.unread} новых`}
         onPress={soon('Уведомления')}
         style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
-        <Icon name="notification-01" size={26} />
-        <View style={{ position: 'absolute', top: 2, right: 0, minWidth: 20, height: 20, paddingHorizontal: 4, borderRadius: 10, backgroundColor: colors.red, borderWidth: 2, borderColor: colors.bg, alignItems: 'center', justifyContent: 'center' }}>
+        <Icon name="notification-01" size={24} />
+        <View style={{ position: 'absolute', top: 4, right: 2, minWidth: 20, height: 20, paddingHorizontal: 4, borderRadius: 10, backgroundColor: colors.red, borderWidth: 2, borderColor: colors.bg, alignItems: 'center', justifyContent: 'center' }}>
           <Text size={11} weight={700} color="surface" lineHeight={13}>
             {fan.unread}
           </Text>
