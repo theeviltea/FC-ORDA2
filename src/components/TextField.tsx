@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { TextInput, View, type TextInputProps } from 'react-native';
 
 import { bodyFamily, colors } from '@/theme';
@@ -8,7 +8,7 @@ import { Text } from './Text';
 
 type State = 'default' | 'error' | 'success' | 'disabled';
 
-type Props = Omit<TextInputProps, 'style'> & { label?: string; icon?: IconName; state?: State; helper?: string };
+type Props = Omit<TextInputProps, 'style'> & { label?: string; icon?: IconName; state?: State; helper?: string; right?: ReactNode };
 
 const look: Record<State, { border: string; ring?: string; help: string }> = {
   default: { border: colors.line, help: colors.text2 },
@@ -17,8 +17,8 @@ const look: Record<State, { border: string; ring?: string; help: string }> = {
   disabled: { border: colors.surfaceSunken, help: colors.text2 },
 };
 
-/** DS TextField: 52px, radius 14, optional leading icon; focus = blue border + soft ring; error / success with helper. */
-export function TextField({ label, icon, state = 'default', helper, ...input }: Props) {
+/** DS TextField: 52px, radius 14, optional leading icon and trailing `right` slot (e.g. show-password); focus = blue border + soft ring; error / success with helper. */
+export function TextField({ label, icon, state = 'default', helper, right, ...input }: Props) {
   const [focus, setFocus] = useState(false);
   const l = look[state];
   const border = focus && state === 'default' ? colors.blue : l.border;
@@ -47,6 +47,7 @@ export function TextField({ label, icon, state = 'default', helper, ...input }: 
           }}
           style={[{ flex: 1, minWidth: 0, height: 48, fontFamily: bodyFamily[500], fontSize: 16, color: colors.navy }, { outlineStyle: 'none' } as object]}
         />
+        {right}
         {status ? <Icon name={status} size={20} color={state === 'error' ? colors.red : '#1E9E5A'} weight={1.8} /> : null}
       </View>
       {helper ? (

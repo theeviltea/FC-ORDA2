@@ -28,3 +28,4 @@ export * from './VideoControls';
 export * from './ListRow';
 export * from './Switch';
 export * from './TicketQRSheet';
+export * from './OtpInput';

@@ -14,7 +14,7 @@ const dateOk = (s: string) => /^\d{2}\.\d{2}\.\d{4}$/.test(s.trim());
 
 /** Личные данные: фото, имя, фамилия, телефон (подтверждён), почта, дата рождения, пароль; «Сохранить изменения». */
 export default function PersonalData() {
-  const { personal } = usePrefs();
+  const { personal, passwordChanged } = usePrefs();
   const [f, setF] = useState<Personal>(personal);
   const [tried, setTried] = useState(false);
   const set = (k: keyof Personal) => (v: string) => setF({ ...f, [k]: v });
@@ -63,7 +63,7 @@ export default function PersonalData() {
         <TextField label="Дата рождения" value={f.birth} onChangeText={set('birth')} icon="calendar-03" keyboardType="numbers-and-punctuation" placeholder="ДД.ММ.ГГГГ" maxLength={10} {...show('birth')} />
       </View>
       <View>
-        <ListCard rows={[{ icon: 'lock', title: 'Пароль', sub: 'Изменён 2 месяца назад', onPress: soon('Новый пароль') }]} />
+        <ListCard rows={[{ icon: 'lock', title: 'Пароль', sub: passwordChanged, onPress: () => router.push('/security') }]} />
       </View>
 
       <Button label="Сохранить изменения" height={52} onPress={save} style={{ marginHorizontal: 20, marginTop: 8 }} />
