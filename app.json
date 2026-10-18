@@ -22,6 +22,14 @@
           "image": "./assets/images/crest.png",
           "imageWidth": 96
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Разрешите доступ к фото, чтобы добавить снимок в конкурс.",
+          "cameraPermission": false,
+          "microphonePermission": false
+        }
       ]
     ],
     "experiments": {

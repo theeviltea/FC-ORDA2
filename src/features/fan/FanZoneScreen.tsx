@@ -33,7 +33,7 @@ export function FanZoneScreen() {
       </View>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, paddingHorizontal: 20 }}>
         {tiles.map((t) => (
-          <IconTile key={t.title} {...t} iconSize={64} onPress={t.title === 'Викторины' ? () => router.push('/quizzes') : soon(t.title)} />
+          <IconTile key={t.title} {...t} iconSize={64} onPress={t.title === 'Викторины' ? () => router.push('/quizzes') : t.title === 'Конкурсы' ? () => router.push('/contests') : soon(t.title)} />
         ))}
       </View>
     </Screen>
