@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import { Image } from 'expo-image';
 import { useState } from 'react';
 import { View } from 'react-native';
@@ -132,13 +133,13 @@ function Hero() {
         ))}
       </View>
       <View style={{ flexDirection: 'row', gap: 8 }}>
-        <Pressable accessibilityRole="button" onPress={soon('Билеты')} style={{ flex: 1, height: 52, borderRadius: radius.m, backgroundColor: colors.surface, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
+        <Pressable accessibilityRole="button" onPress={() => router.push('/tickets')} style={{ flex: 1, height: 52, borderRadius: radius.m, backgroundColor: colors.surface, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
           <Icon name="ticket-01" size={20} weight={1.8} />
           <Text size={17} weight={700}>
             Купить билеты
           </Text>
         </Pressable>
-        <Pressable accessibilityRole="link" accessibilityLabel="Состав команды" onPress={soon('Состав')} style={{ width: 52, height: 52, borderRadius: radius.m, backgroundColor: 'rgba(255,255,255,0.14)', alignItems: 'center', justifyContent: 'center' }}>
+        <Pressable accessibilityRole="link" accessibilityLabel="Состав команды" onPress={() => router.push('/lineup')} style={{ width: 52, height: 52, borderRadius: radius.m, backgroundColor: 'rgba(255,255,255,0.14)', alignItems: 'center', justifyContent: 'center' }}>
           <Icon name="football-pitch" size={22} color="surface" weight={1.8} />
         </Pressable>
       </View>
@@ -205,7 +206,7 @@ function Schedule() {
                 </View>
                 <View style={{ flexDirection: 'row', gap: 8 }}>
                   {m.home ? (
-                    <Pressable accessibilityRole="button" onPress={soon('Билеты')} style={{ flex: 1, height: 44, borderRadius: radius.m, backgroundColor: colors.blue600, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+                    <Pressable accessibilityRole="button" onPress={() => router.push('/tickets')} style={{ flex: 1, height: 44, borderRadius: radius.m, backgroundColor: colors.blue600, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
                       <Icon name="ticket-01" size={18} color="surface" weight={1.8} />
                       <Text size={15} weight={700} color="surface">
                         Билеты

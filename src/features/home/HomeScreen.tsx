@@ -191,7 +191,7 @@ function NextMatch() {
             </View>
           ))}
         </View>
-        <Button label="Купить билеты" variant="white" height={52} onPress={soon('Билеты')} />
+        <Button label="Купить билеты" variant="white" height={52} onPress={() => router.push('/tickets')} />
       </Gradient>
     </View>
   );

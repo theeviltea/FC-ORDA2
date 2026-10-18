@@ -18,3 +18,5 @@ export * from './IconTile';
 export * from './PageTitle';
 export * from './SegmentedTabs';
 export * from './TextField';
+export * from './PersonAvatar';
+export * from './Pitch';
