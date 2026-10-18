@@ -60,7 +60,8 @@ export default function Profile() {
         </Pressable>
       </Gradient>
 
-      <Card style={{ marginHorizontal: 20, padding: 16, gap: 14 }}>
+      <Pressable accessibilityRole="link" accessibilityLabel={`Мои достижения: ${formatPoints(fan.points)} баллов, уровень ${fan.level}`} onPress={() => router.push('/achievements')} style={{ marginHorizontal: 20 }}>
+      <Card style={{ padding: 16, gap: 14 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
           <Image source={img.coin} style={{ width: 38, height: 38 }} contentFit="contain" />
           <Text display size={32} lineHeight={32}>
@@ -94,6 +95,7 @@ export default function Profile() {
           </View>
         </View>
       </Card>
+      </Pressable>
 
       <View style={{ marginTop: 8 }}>
         <SectionHeader title="Мои билеты" link="Все" onPress={() => router.push('/my-tickets')} />
