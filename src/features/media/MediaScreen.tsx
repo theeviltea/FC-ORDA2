@@ -107,7 +107,7 @@ export function MediaScreen() {
       <TeamCard />
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, paddingHorizontal: 20 }}>
         {tiles.map((t) => (
-          <IconTile key={t.title} {...t} onPress={soon(t.title)} />
+          <IconTile key={t.title} {...t} onPress={t.title === 'Видео' ? () => router.push('/videos') : t.title === 'Фото' ? () => router.push('/photos') : soon(t.title)} />
         ))}
       </View>
     </Screen>

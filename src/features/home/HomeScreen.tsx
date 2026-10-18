@@ -229,10 +229,10 @@ function Shop() {
 function Videos() {
   return (
     <View style={{ gap: 12 }}>
-      <SectionHeader title="Видео" link="Все" onPress={() => router.navigate('/media')} />
+      <SectionHeader title="Видео" link="Все" onPress={() => router.push('/videos')} />
       <Carousel>
         {videos.map((v) => (
-          <Pressable key={v.title} accessibilityRole="link" accessibilityLabel={`Смотреть: ${v.title}`} onPress={soon('Видео')} style={{ width: 248, gap: 6 }}>
+          <Pressable key={v.title} accessibilityRole="link" accessibilityLabel={`Смотреть: ${v.title}`} onPress={() => router.push({ pathname: '/video/[id]', params: { id: v.live ? 'kairat' : 'training' } })} style={{ width: 248, gap: 6 }}>
             <View style={{ height: 140, borderRadius: 18, overflow: 'hidden', backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' }}>
               <Image source={v.cover} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} contentFit="cover" />
               <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(23,42,81,0.18)' }} />
