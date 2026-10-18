@@ -144,14 +144,14 @@ function Label({ children }: { children: ReactNode }) {
 
 /** Карточка товара: галерея, цена, размер / цвет / количество, промокод, описание, похожие, панель «Купить». */
 export default function ProductScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>();
+  const { id, promo: promoParam } = useLocalSearchParams<{ id: string; promo?: string }>();
   const item = findItem(id ?? 'jersey');
   const insets = useSafeAreaInsets();
   const [fav, setFav] = useState(false);
   const [size, setSize] = useState('M');
   const [color, setColor] = useState('blue');
   const [qty, setQty] = useState(1);
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState(promoParam ?? '');
   const [promo, setPromo] = useState<{ code: string; off: number } | 'error' | null>(null);
   const wearable = ['jersey', 'hoodie', 'training', 'jacket'].includes(item.id);
 

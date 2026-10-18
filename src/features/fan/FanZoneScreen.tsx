@@ -21,11 +21,11 @@ export function FanZoneScreen() {
   return (
     <Screen tabs gap={16} header={<AppHeader />}>
       <PageTitle>Фан-зона</PageTitle>
-      <SectionHeader title="Для вас" link="Все" onPress={soon('Для вас')} />
+      <SectionHeader title="Для вас" link="Все" onPress={() => router.push('/for-you')} />
       <View style={{ marginTop: -8 }}>
         <Carousel>
           {offers.map((o) => (
-            <Pressable key={o} accessibilityRole="link" onPress={soon(o === 'kit' ? 'Предложение' : 'Для вас')} style={{ width: 300 }}>
+            <Pressable key={o} accessibilityRole="link" onPress={() => router.push({ pathname: '/offer/[id]', params: { id: o } })} style={{ width: 300 }}>
               <OfferBanner offer={o} />
             </Pressable>
           ))}

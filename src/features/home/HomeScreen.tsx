@@ -205,10 +205,10 @@ function ForYou() {
   const offers = ['kit', 'live', 'bonus', 'tickets'] as const;
   return (
     <View style={{ gap: 12 }}>
-      <SectionHeader title="Для вас" link="Все" onPress={soon('Для вас')} />
+      <SectionHeader title="Для вас" link="Все" onPress={() => router.push('/for-you')} />
       <Carousel>
         {offers.map((o) => (
-          <Pressable key={o} accessibilityRole="link" onPress={soon(o === 'kit' ? 'Предложение' : 'Для вас')} style={{ width: 300 }}>
+          <Pressable key={o} accessibilityRole="link" onPress={() => router.push({ pathname: '/offer/[id]', params: { id: o } })} style={{ width: 300 }}>
             <OfferBanner offer={o} />
           </Pressable>
         ))}

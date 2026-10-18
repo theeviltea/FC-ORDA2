@@ -17,7 +17,7 @@ const all: Note[] = [
   { id: 'points', today: true, kind: 'club', coin: true, title: '+80 баллов за викторину', text: '«Чемпионский сезон»: 8 из 10 правильных ответов', meta: '1 час назад · Фан-зона', to: '/achievements' },
   { id: 'interview', today: true, kind: 'club', icon: 'news-01', title: 'Большое интервью с капитаном', text: 'О первом круге, болельщиках и целях сезона', meta: '2 часа назад · Новости клуба', to: '/news' },
   { id: 'order', today: false, kind: 'shop', icon: 'delivery-truck-01', title: 'Заказ № 1048 в пути', text: 'Курьер привезёт домашнюю джерси завтра с 10:00 до 14:00', meta: 'Вчера, 19:42 · Магазин', to: '/orders', readInit: true },
-  { id: 'promo', today: false, kind: 'shop', icon: 'discount-tag-01', title: 'Скидка 15% на форму', text: 'Промокод ORDA15 действует до 31 октября', meta: '22 октября · Для вас', to: { pathname: '/product/[id]', params: { id: 'jersey' } }, readInit: true },
+  { id: 'promo', today: false, kind: 'shop', icon: 'discount-tag-01', title: 'Скидка 15% на форму', text: 'Промокод ORDA15 действует до 31 октября', meta: '22 октября · Для вас', to: { pathname: '/offer/[id]', params: { id: 'kit' } }, readInit: true },
   { id: 'contest', today: false, kind: 'club', icon: 'champion', title: 'Итоги конкурса плакатов', text: 'Победитель объявлен — посмотрите лучшие работы', meta: '20 октября · Конкурсы', to: { pathname: '/contest/winners', params: { id: 'poster' } }, readInit: true },
 ];
 
