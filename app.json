@@ -15,12 +15,18 @@
     },
     "plugins": [
       "expo-router",
-      ["expo-splash-screen", { "backgroundColor": "#172A51", "image": "./assets/images/crest.png", "imageWidth": 96 }]
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#172A51",
+          "image": "./assets/images/crest.png",
+          "imageWidth": 96
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true,
-      "baseUrl": "/FC-ORDA2"
+      "reactCompiler": true
     }
   }
 }

@@ -47,3 +47,6 @@ assets/                   шрифт SO Sporty и картинки, выгруж
 
 Пуш в `main` → GitHub Actions собирает web (`npm run export:web`) и кладёт `dist` в ветку `gh-pages`.
 GitHub Pages раздаёт её по адресу https://theeviltea.github.io/FC-ORDA2/.
+
+Превью-артефакт «ORDA App Preview» (как у 919): `npm run build:artifact` собирает один HTML со встроенными
+JS, картинками и шрифтами в `preview/orda-preview.html`, его публикуем в артефакт.

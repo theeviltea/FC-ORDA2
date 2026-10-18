@@ -11,7 +11,8 @@
     "tokens": "node scripts/build-tokens.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "expo lint",
-    "export:web": "expo export -p web && node scripts/postexport.mjs"
+    "export:web": "expo export -p web && node scripts/postexport.mjs",
+    "build:artifact": "node scripts/build-artifact.mjs"
   },
   "dependencies": {
     "@expo-google-fonts/roboto-condensed": "^0.4.2",

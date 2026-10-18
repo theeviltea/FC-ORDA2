@@ -43,3 +43,5 @@ yarn-error.*
 
 # local
 .claude/settings.local.json
+dist-artifact/
+preview/
