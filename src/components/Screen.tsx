@@ -13,10 +13,13 @@ type Props = {
   gap?: number;
   /** Decorative layer that scrolls with the content (brand stars). */
   decor?: ReactNode;
+  /** Bar pinned to the bottom (e.g. «Купить»); `footerHeight` reserves room for it. */
+  footer?: ReactNode;
+  footerHeight?: number;
 };
 
 /** Screen on the brand background: fixed header on top, scrollable content below. */
-export function Screen({ children, header, tabs, gap = 28, decor }: Props) {
+export function Screen({ children, header, tabs, gap = 28, decor, footer, footerHeight = 0 }: Props) {
   const insets = useSafeAreaInsets();
   const [scrolled, setScrolled] = useState(false);
   return (
@@ -41,10 +44,11 @@ export function Screen({ children, header, tabs, gap = 28, decor }: Props) {
           const s = e.nativeEvent.contentOffset.y > 2;
           if (s !== scrolled) setScrolled(s);
         }}
-        contentContainerStyle={{ paddingTop: header ? 8 : insets.top + 8, paddingBottom: (tabs ? 110 : 40) + insets.bottom, gap }}>
+        contentContainerStyle={{ paddingTop: header ? 8 : insets.top + 8, paddingBottom: (tabs ? 110 : 40) + footerHeight + insets.bottom, gap }}>
         {decor}
         {children}
       </ScrollView>
+      {footer}
     </View>
   );
 }

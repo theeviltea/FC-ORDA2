@@ -2,21 +2,12 @@ import { Image } from 'expo-image';
 import { useState } from 'react';
 import { View } from 'react-native';
 
-import { AppHeader, Card, FilterChips, Icon, PageTitle, Pressable, ProductCard, Screen, SegmentedTabs, Star, Text, type IconName, type Product } from '@/components';
+import { AppHeader, Card, FilterChips, Icon, PageTitle, Pressable, ProductCard, Screen, SegmentedTabs, Star, Text, type IconName } from '@/components';
+import { catalogue } from '@/data/shop';
+import { router } from 'expo-router';
 import { aspect, img } from '@/data/images';
-import { soon } from '@/data/nav';
 import { colors, radius } from '@/theme';
 
-const products: Product[] = [
-  { name: 'Домашняя джерси 2024/25', price: '24 990 ₸', badge: 'Новое', tone: 'new', photo: img.jersey },
-  { name: 'Кружка «Ордабасы»', price: '6 990 ₸', badge: 'Хит продаж', tone: 'hit', photo: img.mug },
-  { name: 'Спортивное худи (синее)', price: '18 990 ₸', photo: img.hoodie },
-  { name: 'Шарф болельщика ORDA', price: '7 990 ₸' },
-  { name: 'Тренировочный комплект', price: '21 990 ₸', photo: img.trainingKit },
-  { name: 'Зимняя куртка клуба', price: '34 990 ₸', photo: img.jacket },
-  { name: 'Рюкзак с логотипом', price: '14 990 ₸', photo: img.backpack },
-  { name: 'Флаг болельщика 1,5 м', price: '4 990 ₸', photo: img.flag },
-];
 
 type Status = 'way' | 'ready' | 'done';
 type Order = {
@@ -77,7 +68,7 @@ const activeCount = orders.filter((o) => o.status !== 'done').length;
 
 function Promo() {
   return (
-    <Pressable accessibilityRole="link" onPress={soon('Товар')} style={{ marginHorizontal: 20, height: 150, borderRadius: 22, overflow: 'hidden', backgroundColor: colors.blue }}>
+    <Pressable accessibilityRole="link" onPress={() => router.push({ pathname: '/product/[id]', params: { id: 'jersey' } })} style={{ marginHorizontal: 20, height: 150, borderRadius: 22, overflow: 'hidden', backgroundColor: colors.blue }}>
       <Star w={160} fill="rgba(255,255,255,0.25)" style={{ right: -40, top: -50 }} />
       <Image source={img.shopPromo} style={{ position: 'absolute', right: 22, top: 10, height: 136, width: 136 * aspect.shopPromo }} />
       <View style={{ padding: 18, gap: 6, width: 230 }}>
@@ -177,7 +168,7 @@ function OrderCard({ o }: { o: Order }) {
         </Text>
       </View>
       {o.action ? (
-        <Pressable accessibilityRole="button" onPress={soon(o.action.label)} style={{ height: 44, borderRadius: radius.m, backgroundColor: colors.blue10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
+        <Pressable accessibilityRole="button" onPress={o.action.label === 'Купить снова' ? () => router.push({ pathname: '/product/[id]', params: { id: 'jersey' } }) : () => router.push('/orders')} style={{ height: 44, borderRadius: radius.m, backgroundColor: colors.blue10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
           <Icon name={o.action.icon} size={18} color="blue600" weight={1.8} />
           <Text size={15} weight={700} color="blue600">
             {o.action.label}
@@ -207,7 +198,7 @@ function Orders() {
       {list.map((o) => (
         <OrderCard key={o.id} o={o} />
       ))}
-      <Pressable accessibilityRole="link" onPress={soon('История покупок')} style={{ alignSelf: 'center', minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+      <Pressable accessibilityRole="link" onPress={() => router.push('/orders')} style={{ alignSelf: 'center', minHeight: 44, flexDirection: 'row', alignItems: 'center', gap: 4 }}>
         <Text size={15} weight={600} color="blue600">
           Вся история покупок
         </Text>
@@ -228,9 +219,9 @@ export function ShopScreen() {
         <View style={{ gap: 16 }}>
           <Promo />
           <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, paddingHorizontal: 20 }}>
-            {products.map((p) => (
-              <View key={p.name} style={{ flexBasis: '45%', flexGrow: 1 }}>
-                <ProductCard item={p} width="100%" onPress={soon('Товар')} />
+            {catalogue.map((p) => (
+              <View key={p.id} style={{ flexBasis: '45%', flexGrow: 1 }}>
+                <ProductCard item={p} width="100%" onPress={() => router.push({ pathname: '/product/[id]', params: { id: p.id } })} />
               </View>
             ))}
           </View>

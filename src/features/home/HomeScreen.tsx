@@ -219,7 +219,7 @@ function Shop() {
       <SectionHeader title="Магазин" link="Ещё" onPress={() => router.navigate('/shop')} />
       <Carousel>
         {products.map((p) => (
-          <ProductCard key={p.name} item={p} onPress={soon('Товар')} />
+          <ProductCard key={p.id} item={p} onPress={() => router.push({ pathname: '/product/[id]', params: { id: p.id } })} />
         ))}
       </Carousel>
     </View>

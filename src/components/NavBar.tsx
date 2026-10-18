@@ -11,7 +11,8 @@ type Props = {
   title: string;
   /** Hide «Назад» on screens that have nowhere to go back to. */
   back?: boolean;
-  action?: { icon: IconName; label: string; onPress: () => void };
+  /** `active` = pressed toggle (favourite): red, filled. */
+  action?: { icon: IconName; label: string; onPress: () => void; active?: boolean };
   tone?: 'light' | 'dark';
 };
 
@@ -32,8 +33,8 @@ export function NavBar({ title, back = true, action, tone = 'light' }: Props) {
         {title}
       </Text>
       {action ? (
-        <Pressable accessibilityRole="button" accessibilityLabel={action.label} onPress={action.onPress} style={{ width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
-          <Icon name={action.icon} size={24} color={fg} />
+        <Pressable accessibilityRole="button" accessibilityLabel={action.label} accessibilityState={action.active !== undefined ? { selected: action.active } : undefined} onPress={action.onPress} style={{ width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
+          <Icon name={action.icon} size={24} color={action.active ? colors.red : fg} filled={action.active} />
         </Pressable>
       ) : (
         <View style={{ width: 44 }} />

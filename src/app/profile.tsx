@@ -120,7 +120,7 @@ export default function Profile() {
           <Pressable
             key={r.title}
             accessibilityRole="link"
-            onPress={soon(r.title)}
+            onPress={r.title === 'История покупок' ? () => router.push('/orders') : soon(r.title)}
             style={{ flexDirection: 'row', alignItems: 'center', gap: 14, minHeight: 64, paddingVertical: 10, borderBottomWidth: i < rows.length - 1 ? 1 : 0, borderColor: colors.surfaceSunken }}>
             <View style={{ width: 40, height: 40, borderRadius: 12, backgroundColor: colors.blue10, alignItems: 'center', justifyContent: 'center' }}>
               <Icon name={r.icon} size={22} color="blue" weight={1.6} />

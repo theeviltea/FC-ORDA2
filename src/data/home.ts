@@ -21,10 +21,10 @@ export const nextMatch = {
   startsIn: 191916,
 };
 
-export const products: Product[] = [
-  { name: 'Футболка ORDA', price: '24 990 ₸', badge: 'Новое', tone: 'new', photo: img.jersey },
-  { name: 'Кружка «Ордабасы»', price: '6 990 ₸', badge: 'Хит продаж', tone: 'hit', photo: img.mug },
-  { name: 'Спортивное худи (синее)', price: '18 990 ₸', photo: img.hoodie },
+export const products: (Product & { id: string })[] = [
+  { id: 'jersey', name: 'Футболка ORDA', price: '24 990 ₸', badge: 'Новое', tone: 'new', photo: img.jersey },
+  { id: 'mug', name: 'Кружка «Ордабасы»', price: '6 990 ₸', badge: 'Хит продаж', tone: 'hit', photo: img.mug },
+  { id: 'hoodie', name: 'Спортивное худи (синее)', price: '18 990 ₸', photo: img.hoodie },
 ];
 
 export const videos = [

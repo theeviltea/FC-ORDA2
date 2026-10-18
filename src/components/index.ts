@@ -17,3 +17,4 @@ export * from './Text';
 export * from './IconTile';
 export * from './PageTitle';
 export * from './SegmentedTabs';
+export * from './TextField';
