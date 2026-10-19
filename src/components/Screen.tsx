@@ -22,12 +22,15 @@ type Props = {
   headerBg?: string;
   /** Access to the scroll view (jump to a section). */
   scrollRef?: RefObject<ScrollView | null>;
+  /** Thin reading-progress bar under the header (long reads). */
+  readingProgress?: boolean;
 };
 
 /** Screen on the brand background: fixed header on top, scrollable content below. */
-export function Screen({ children, header, tabs, gap = 28, decor, footer, footerHeight = 0, bg = colors.bg, headerBg, scrollRef }: Props) {
+export function Screen({ children, header, tabs, gap = 28, decor, footer, footerHeight = 0, bg = colors.bg, headerBg, scrollRef, readingProgress }: Props) {
   const insets = useSafeAreaInsets();
   const [scrolled, setScrolled] = useState(false);
+  const [read, setRead] = useState(0);
   return (
     <View style={{ flex: 1, backgroundColor: bg }}>
       {header ? (
@@ -41,6 +44,11 @@ export function Screen({ children, header, tabs, gap = 28, decor, footer, footer
             boxShadow: scrolled ? '0 6px 16px rgba(23, 42, 81, 0.06)' : undefined,
           }}>
           {header}
+          {readingProgress ? (
+            <View aria-hidden style={{ height: 3, marginTop: 4, backgroundColor: colors.blue10 }}>
+              <View style={{ width: `${Math.round(read * 100)}%`, height: 3, backgroundColor: colors.blue }} />
+            </View>
+          ) : null}
         </View>
       ) : null}
       <ScrollView
@@ -50,6 +58,11 @@ export function Screen({ children, header, tabs, gap = 28, decor, footer, footer
         onScroll={(e) => {
           const s = e.nativeEvent.contentOffset.y > 2;
           if (s !== scrolled) setScrolled(s);
+          if (readingProgress) {
+            const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent;
+            const max = contentSize.height - layoutMeasurement.height;
+            setRead(max > 0 ? Math.min(1, Math.max(0, contentOffset.y / max)) : 0);
+          }
         }}
         contentContainerStyle={{ paddingTop: header ? 8 : insets.top + 8, paddingBottom: (tabs ? 110 : 40) + footerHeight + insets.bottom, gap }}>
         {decor}
