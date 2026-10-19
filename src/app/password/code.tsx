@@ -1,17 +1,20 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { View } from 'react-native';
 
 import { Button, NavBar, OtpInput, Screen, Star, Text } from '@/components';
-import { maskPhone, usePrefs } from '@/data/prefs';
+import { maskPhone, setPrefs, usePrefs } from '@/data/prefs';
+import { pendingSignup } from '@/data/signup';
 
 const WAIT = 59;
-/** Demo: the backend would check the code; here any 6 digits pass except 000000 (shows the error state). */
-const check = (c: string) => c !== '000000';
+/** Prototype: any 6 digits pass (the backend would check the code). */
+const check = (c: string) => c.length === 6;
 
-/** Подтверждение по SMS перед сменой пароля: 6 ячеек, таймер повторной отправки, ошибка с числом попыток. */
+/** Код из SMS: смена пароля (`mode` нет), восстановление (`reset`) или регистрация (`register`). 6 ячеек, таймер повторной отправки. */
 export default function PasswordCode() {
+  const { mode, phone: phoneParam } = useLocalSearchParams<{ mode?: 'reset' | 'register'; phone?: string }>();
   const { personal } = usePrefs();
+  const phone = phoneParam ? `+7 ${phoneParam}` : personal.phone;
   const [code, setCode] = useState('');
   const [left, setLeft] = useState(WAIT);
   const [tries, setTries] = useState(3);
@@ -26,7 +29,14 @@ export default function PasswordCode() {
     if (c.length < 6) return;
     if (check(c)) {
       setState('success');
-      setTimeout(() => router.replace('/password/new'), 600);
+      setTimeout(() => {
+        if (mode === 'register') {
+          const s = pendingSignup.current;
+          if (s) setPrefs({ authed: true, personal: s.personal, avatar: s.avatar, passwordChanged: 'Создан только что', notice: null });
+          router.dismissAll();
+          router.navigate('/');
+        } else router.replace({ pathname: '/password/new', params: mode ? { mode } : {} });
+      }, 600);
     } else {
       setTries((n) => n - 1);
       setState('error');
@@ -53,7 +63,7 @@ export default function PasswordCode() {
           Введите код
         </Text>
         <Text size={15} lineHeight={21} color="text2">
-          Отправили SMS с кодом на номер {maskPhone(personal.phone)}.
+          Отправили SMS с кодом на номер {maskPhone(phone)}.
         </Text>
       </View>
       <View style={{ marginHorizontal: 20 }}>

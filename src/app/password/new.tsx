@@ -1,8 +1,8 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
 
-import { Button, Icon, NavBar, Pressable, Screen, Star, Text, TextField } from '@/components';
+import { Button, NavBar, PasswordField, Screen, Star, Text } from '@/components';
 import { setPrefs } from '@/data/prefs';
 import { colors } from '@/theme';
 
@@ -16,20 +16,11 @@ const strength = (p: string) => {
 };
 const words = ['', 'Слабый пароль', 'Средний пароль', 'Надёжный пароль', 'Очень надёжный пароль'];
 
-function Eye({ on, toggle }: { on: boolean; toggle: () => void }) {
-  return (
-    <Pressable accessibilityRole="button" accessibilityLabel={on ? 'Скрыть пароль' : 'Показать пароль'} onPress={toggle} style={{ width: 36, height: 44, alignItems: 'center', justifyContent: 'center', marginRight: -8 }}>
-      <Icon name={on ? 'view-off-slash' : 'view'} size={20} color="text2" weight={1.8} />
-    </Pressable>
-  );
-}
-
 /** Новый пароль после подтверждения по SMS: шкала надёжности, проверка совпадения, «Сохранить пароль». */
 export default function NewPassword() {
+  const { mode } = useLocalSearchParams<{ mode?: string }>();
   const [p1, setP1] = useState('');
   const [p2, setP2] = useState('');
-  const [show1, setShow1] = useState(false);
-  const [show2, setShow2] = useState(false);
   const [tried, setTried] = useState(false);
   const st = strength(p1);
   const valid = p1.length >= 8 && /[a-zа-я]/i.test(p1) && /\d/.test(p1);
@@ -41,6 +32,11 @@ export default function NewPassword() {
   const save = () => {
     setTried(true);
     if (!valid || !match) return;
+    if (mode === 'reset') {
+      setPrefs({ passwordChanged: 'Изменён только что', notice: 'Пароль обновлён. Войдите с новым паролем.' });
+      router.dismissTo('/login');
+      return;
+    }
     setPrefs({ passwordChanged: 'Изменён только что' });
     router.dismissTo('/security');
   };
@@ -63,7 +59,7 @@ export default function NewPassword() {
         </Text>
       </View>
       <View style={{ marginHorizontal: 20, gap: 16 }}>
-        <TextField label="Новый пароль" value={p1} onChangeText={setP1} secureTextEntry={!show1} autoCapitalize="none" autoComplete="new-password" textContentType="newPassword" state={p1Err ? 'error' : 'default'} right={<Eye on={show1} toggle={() => setShow1(!show1)} />} />
+        <PasswordField label="Новый пароль" value={p1} onChangeText={setP1} autoComplete="new-password" textContentType="newPassword" state={p1Err ? 'error' : 'default'} />
         {p1 ? (
           <View style={{ gap: 6, marginTop: -6 }}>
             <View style={{ flexDirection: 'row', gap: 4 }} aria-hidden>
@@ -76,7 +72,7 @@ export default function NewPassword() {
             </Text>
           </View>
         ) : null}
-        <TextField label="Повторите пароль" value={p2} onChangeText={setP2} secureTextEntry={!show2} autoCapitalize="none" autoComplete="new-password" textContentType="newPassword" state={p2State} helper={p2Help} right={<Eye on={show2} toggle={() => setShow2(!show2)} />} />
+        <PasswordField label="Повторите пароль" value={p2} onChangeText={setP2} autoComplete="new-password" textContentType="newPassword" state={p2State} helper={p2Help} />
       </View>
       <Button label="Сохранить пароль" height={52} onPress={save} style={{ marginHorizontal: 20 }} />
     </Screen>

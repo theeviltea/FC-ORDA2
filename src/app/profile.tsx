@@ -3,9 +3,9 @@ import { router, type Href } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
 
-import { Button, Card, Gradient, Icon, NavBar, Pressable, Screen, SectionHeader, Star, Text, TicketQRSheet, type IconName } from '@/components';
+import { Button, Card, Gradient, Icon, NavBar, Pressable, Screen, SectionHeader, Star, Text, TicketQRSheet, Avatar, type IconName } from '@/components';
 import { img } from '@/data/images';
-import { usePrefs } from '@/data/prefs';
+import { setPrefs, usePrefs } from '@/data/prefs';
 import { fan, formatPoints } from '@/data/user';
 import { colors, radius, shadows } from '@/theme';
 
@@ -41,7 +41,7 @@ export default function Profile() {
         <Star w={12} fill={colors.sky} style={{ right: 64, top: 52 }} />
         <View style={{ width: 96, height: 96 }}>
           <View style={{ flex: 1, borderRadius: 48, padding: 3, backgroundColor: colors.surface }}>
-            <Image source={img.avatar} accessibilityLabel={fan.name} style={{ flex: 1, borderRadius: 45 }} contentFit="cover" />
+            <Avatar size={90} label={personal.first} />
           </View>
           <View accessibilityLabel="Подтверждённый профиль" style={{ position: 'absolute', right: 0, bottom: 2, width: 28, height: 28, borderRadius: 14, backgroundColor: colors.blue600, borderWidth: 3, borderColor: colors.surface, alignItems: 'center', justifyContent: 'center' }}>
             <Icon name="tick-02" size={14} color="surface" weight={2.6} />
@@ -144,7 +144,11 @@ export default function Profile() {
         ))}
       </Card>
 
-      <Button label="Выйти из аккаунта" icon="logout-01" variant="outlineDanger" height={52} onPress={() => router.replace('/guest')} style={{ marginHorizontal: 20, marginTop: 8 }} />
+      <Button label="Выйти из аккаунта" icon="logout-01" variant="outlineDanger" height={52} onPress={() => {
+          setPrefs({ authed: false });
+          router.dismissAll();
+          router.navigate('/');
+        }} style={{ marginHorizontal: 20, marginTop: 8 }} />
       <Text size={13} color="text2" align="center" style={{ marginTop: -6 }}>
         Баллы и билеты сохранятся в вашем ORDA ID
       </Text>

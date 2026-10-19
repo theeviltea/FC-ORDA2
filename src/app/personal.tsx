@@ -1,16 +1,14 @@
-import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { View } from 'react-native';
 
-import { Button, Icon, ListCard, NavBar, Pressable, Screen, Star, Text, TextField } from '@/components';
-import { img } from '@/data/images';
+import { Avatar, Button, Icon, ListCard, NavBar, Pressable, Screen, Star, Text, TextField } from '@/components';
 import { soon } from '@/data/nav';
 import { setPrefs, usePrefs, type Personal } from '@/data/prefs';
 import { colors } from '@/theme';
 
 const emailOk = (s: string) => /^\S+@\S+\.\S+$/.test(s.trim());
-const dateOk = (s: string) => /^\d{2}\.\d{2}\.\d{4}$/.test(s.trim());
+const dateOk = (s: string) => !s.trim() || /^\d{2}\.\d{2}\.\d{4}$/.test(s.trim());
 
 /** Личные данные: фото, имя, фамилия, телефон (подтверждён), почта, дата рождения, пароль; «Сохранить изменения». */
 export default function PersonalData() {
@@ -44,7 +42,7 @@ export default function PersonalData() {
       <View style={{ alignItems: 'center', gap: 10, marginTop: 4 }}>
         <Pressable accessibilityRole="button" accessibilityLabel="Изменить фото" onPress={soon('Изменить фото')} style={{ width: 104, height: 104 }}>
           <View style={{ flex: 1, padding: 3, borderRadius: 52, backgroundColor: colors.surface, boxShadow: '0 6px 20px rgba(23, 42, 81, 0.12)' }}>
-            <Image source={img.avatar} style={{ flex: 1, borderRadius: 49 }} contentFit="cover" />
+            <Avatar size={98} />
           </View>
           <View style={{ position: 'absolute', right: 2, bottom: 4, width: 34, height: 34, borderRadius: 17, backgroundColor: colors.blue600, borderWidth: 3, borderColor: colors.bg, alignItems: 'center', justifyContent: 'center' }}>
             <Icon name="camera-01" size={16} color="surface" weight={1.8} />

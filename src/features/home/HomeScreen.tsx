@@ -10,7 +10,6 @@ import {
   Card,
   Carousel,
   Gradient,
-  GuestHeader,
   Icon,
   OfferBanner,
   PlayerCard,
@@ -33,7 +32,7 @@ export function HomeScreen({ guest }: { guest?: boolean }) {
   return (
     <Screen
       tabs
-      header={guest ? <GuestHeader /> : <AppHeader />}
+      header={<AppHeader />}
       decor={
         <View style={{ position: 'absolute', top: 0, left: 0, right: 0 }} pointerEvents="none">
           <Star w={64} style={{ top: 470, left: 300 }} />
@@ -60,7 +59,7 @@ export function HomeScreen({ guest }: { guest?: boolean }) {
 
 function JoinBanner() {
   return (
-    <Pressable accessibilityRole="link" onPress={soon('Регистрация')} style={{ marginHorizontal: 20 }}>
+    <Pressable accessibilityRole="link" onPress={() => router.push('/register')} style={{ marginHorizontal: 20 }}>
       <Gradient style={{ borderRadius: radius.l, overflow: 'hidden', padding: 16, paddingRight: 116, gap: 6 }}>
         <Star w={14} fill={colors.sky} style={{ right: 120, top: 14 }} />
         <Image source={img.coin} style={{ position: 'absolute', right: 14, top: '50%', marginTop: -42, width: 84, height: 84 }} contentFit="contain" />

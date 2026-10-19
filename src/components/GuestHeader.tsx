@@ -1,8 +1,8 @@
 import { Image } from 'expo-image';
+import { router } from 'expo-router';
 import { View } from 'react-native';
 
 import { img } from '@/data/images';
-import { soon } from '@/data/nav';
 import { colors, shadows } from '@/theme';
 
 import { Icon } from './Icon';
@@ -24,7 +24,7 @@ export function GuestHeader() {
       <View style={{ flex: 1 }} />
       <Pressable
         accessibilityRole="button"
-        onPress={soon('Вход')}
+        onPress={() => router.push('/login')}
         style={{ height: 36, paddingLeft: 10, paddingRight: 14, borderRadius: 18, backgroundColor: colors.blue600, flexDirection: 'row', alignItems: 'center', gap: 6 }}>
         <Icon name="user-circle" size={20} color="surface" weight={1.8} />
         <Text size={15} weight={700} color="surface">

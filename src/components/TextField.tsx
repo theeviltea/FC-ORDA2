@@ -8,7 +8,7 @@ import { Text } from './Text';
 
 type State = 'default' | 'error' | 'success' | 'disabled';
 
-type Props = Omit<TextInputProps, 'style'> & { label?: string; icon?: IconName; state?: State; helper?: string; right?: ReactNode };
+type Props = Omit<TextInputProps, 'style'> & { label?: string; icon?: IconName; state?: State; helper?: string; right?: ReactNode; prefix?: string };
 
 const look: Record<State, { border: string; ring?: string; help: string }> = {
   default: { border: colors.line, help: colors.text2 },
@@ -18,7 +18,7 @@ const look: Record<State, { border: string; ring?: string; help: string }> = {
 };
 
 /** DS TextField: 52px, radius 14, optional leading icon and trailing `right` slot (e.g. show-password); focus = blue border + soft ring; error / success with helper. */
-export function TextField({ label, icon, state = 'default', helper, right, ...input }: Props) {
+export function TextField({ label, icon, state = 'default', helper, right, prefix, ...input }: Props) {
   const [focus, setFocus] = useState(false);
   const l = look[state];
   const border = focus && state === 'default' ? colors.blue : l.border;
@@ -33,6 +33,11 @@ export function TextField({ label, icon, state = 'default', helper, right, ...in
       ) : null}
       <View style={{ height: 52, paddingHorizontal: 16, borderRadius: 14, backgroundColor: state === 'disabled' ? colors.surfaceSunken : colors.surface, borderWidth: 1.5, borderColor: border, boxShadow: ring, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
         {icon ? <Icon name={icon} size={20} color="text2" /> : null}
+        {prefix ? (
+          <Text size={16} weight={500} color="text2">
+            {prefix}
+          </Text>
+        ) : null}
         <TextInput
           {...input}
           editable={state !== 'disabled'}

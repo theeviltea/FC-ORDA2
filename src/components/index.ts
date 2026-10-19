@@ -30,3 +30,5 @@ export * from './Switch';
 export * from './TicketQRSheet';
 export * from './OtpInput';
 export * from './Checkbox';
+export * from './Avatar';
+export * from './PasswordField';
