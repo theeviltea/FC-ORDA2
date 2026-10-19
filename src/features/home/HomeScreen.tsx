@@ -62,7 +62,9 @@ function JoinBanner() {
     <Pressable accessibilityRole="link" onPress={() => router.push('/register')} style={{ marginHorizontal: 20 }}>
       <Gradient style={{ borderRadius: radius.l, overflow: 'hidden', padding: 16, paddingRight: 116, gap: 6 }}>
         <Star w={14} fill={colors.sky} style={{ right: 120, top: 14 }} />
-        <Image source={img.coin} style={{ position: 'absolute', right: 14, top: '50%', marginTop: -42, width: 84, height: 84 }} contentFit="contain" />
+        <View style={{ position: 'absolute', right: 16, top: '50%', marginTop: -42, width: 84, height: 84, borderRadius: 42, backgroundColor: colors.surface, alignItems: 'center', justifyContent: 'center', boxShadow: '0 8px 18px rgba(10, 18, 36, 0.3)' }}>
+          <Image source={img.crest} accessibilityLabel="ФК «Ордабасы»" style={{ width: 50, height: 61 }} contentFit="contain" />
+        </View>
         <Text display size={20} lineHeight={22} upper color="surface">
           Стань частью ORDA
         </Text>
