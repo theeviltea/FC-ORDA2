@@ -437,15 +437,14 @@ function Partners() {
       <Text display size={24} lineHeight={28}>
         Партнёры клуба
       </Text>
-      <Card style={{ height: 104, overflow: 'hidden', alignItems: 'center', justifyContent: 'center' }}>
-        <Star w={64} style={{ right: -20, top: -20 }} />
+      <View style={{ height: 88, alignItems: 'center', justifyContent: 'center' }}>
         <Image source={lead.logo} accessibilityLabel={lead.name} style={{ width: Math.min(lead.h * lead.ratio, 210), height: lead.h + 12 }} contentFit="contain" />
-      </Card>
+      </View>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12 }}>
         {rest.map((p) => (
-          <Card key={p.name} style={{ flexBasis: '45%', flexGrow: 1, height: 88, paddingVertical: 14, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center' }}>
+          <View key={p.name} style={{ flexBasis: '45%', flexGrow: 1, height: 72, paddingVertical: 8, paddingHorizontal: 16, alignItems: 'center', justifyContent: 'center' }}>
             <Image source={p.logo} accessibilityLabel={p.name} style={{ width: '100%', height: p.h }} contentFit="contain" />
-          </Card>
+          </View>
         ))}
       </View>
     </View>
