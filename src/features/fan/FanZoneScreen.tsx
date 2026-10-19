@@ -3,7 +3,15 @@ import { View } from 'react-native';
 
 import { AppHeader, Carousel, IconTile, OfferBanner, PageTitle, Pressable, Screen, SectionHeader } from '@/components';
 import { img } from '@/data/images';
-import { soon } from '@/data/nav';
+
+const routes: Record<string, '/quizzes' | '/contests' | '/polls' | '/predictions' | '/tasks' | '/interactive'> = {
+  Викторины: '/quizzes',
+  Конкурсы: '/contests',
+  Опросы: '/polls',
+  'Результаты матчей': '/predictions',
+  Задания: '/tasks',
+  Интерактив: '/interactive',
+};
 
 const tiles = [
   { title: 'Викторины', sub: 'Проверьте знания о клубе', icon: img.icon3dQuiz },
@@ -33,7 +41,7 @@ export function FanZoneScreen() {
       </View>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, paddingHorizontal: 20 }}>
         {tiles.map((t) => (
-          <IconTile key={t.title} {...t} iconSize={64} onPress={t.title === 'Викторины' ? () => router.push('/quizzes') : t.title === 'Конкурсы' ? () => router.push('/contests') : soon(t.title)} />
+          <IconTile key={t.title} {...t} iconSize={64} onPress={() => router.push(routes[t.title])} />
         ))}
       </View>
     </Screen>
