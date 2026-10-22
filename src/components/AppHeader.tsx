@@ -5,51 +5,38 @@ import { View } from 'react-native';
 import { usePrefs } from '@/data/prefs';
 import { fan, formatPoints } from '@/data/user';
 import { img } from '@/data/images';
-import { colors, shadows } from '@/theme';
+import { colors } from '@/theme';
 
 import { Avatar } from './Avatar';
+import { Glass, GlassButton } from './Glass';
 import { GuestHeader } from './GuestHeader';
-import { Icon } from './Icon';
 import { Pressable } from './Pressable';
 import { Text } from './Text';
 
-/** Top-level header: avatar + name + points on the left, notifications bell on the right. Signed out → GuestHeader. */
+/** Top-level header: glass capsule with avatar + name + points on the left, round glass bell on the right. Signed out → GuestHeader. */
 export function AppHeader() {
   const { authed, personal } = usePrefs();
   if (!authed) return <GuestHeader />;
   return (
-    <View style={{ height: 48, paddingLeft: 20, paddingRight: 12, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-      <Pressable
-        accessibilityRole="link"
-        accessibilityLabel="Профиль"
-        onPress={() => router.push('/profile')}
-        style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-        <View style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 2, borderColor: colors.surface, overflow: 'hidden', backgroundColor: colors.blue10, ...shadows.avatar }}>
-          <Avatar size={36} />
-        </View>
-        <Text size={17} weight={700}>
-          {personal.first}
-        </Text>
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, height: 28, paddingLeft: 4, paddingRight: 10, borderRadius: 14, borderWidth: 1.5, borderColor: colors.blue, backgroundColor: colors.surface }}>
-          <Image source={img.coin} style={{ width: 22, height: 22 }} contentFit="contain" />
-          <Text size={14} weight={700}>
-            {formatPoints(fan.points)}
+    <View style={{ height: 52, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+      <Pressable accessibilityRole="link" accessibilityLabel={`Профиль: ${personal.first}, ${formatPoints(fan.points)} баллов`} onPress={() => router.push('/profile')}>
+        <Glass radius={24} interactive style={{ height: 48, paddingLeft: 4, paddingRight: 6, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+          <View style={{ width: 40, height: 40, borderRadius: 20, borderWidth: 2, borderColor: colors.surface, overflow: 'hidden', backgroundColor: colors.blue10 }}>
+            <Avatar size={36} />
+          </View>
+          <Text size={17} weight={700}>
+            {personal.first}
           </Text>
-        </View>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, height: 32, paddingLeft: 4, paddingRight: 10, borderRadius: 16, backgroundColor: colors.blue10 }}>
+            <Image source={img.coin} style={{ width: 22, height: 22 }} contentFit="contain" />
+            <Text size={14} weight={700}>
+              {formatPoints(fan.points)}
+            </Text>
+          </View>
+        </Glass>
       </Pressable>
       <View style={{ flex: 1 }} />
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel={`Уведомления, ${fan.unread} новых`}
-        onPress={() => router.push('/inbox')}
-        style={{ width: 44, height: 44, alignItems: 'center', justifyContent: 'center' }}>
-        <Icon name="notification-01" size={24} />
-        <View style={{ position: 'absolute', top: 4, right: 2, minWidth: 20, height: 20, paddingHorizontal: 4, borderRadius: 10, backgroundColor: colors.red, borderWidth: 2, borderColor: colors.bg, alignItems: 'center', justifyContent: 'center' }}>
-          <Text size={11} weight={700} color="surface" lineHeight={13}>
-            {fan.unread}
-          </Text>
-        </View>
-      </Pressable>
+      <GlassButton icon="notification-01" label="Уведомления" badge={fan.unread} onPress={() => router.push('/inbox')} />
     </View>
   );
 }

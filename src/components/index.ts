@@ -34,3 +34,4 @@ export * from './Avatar';
 export * from './PasswordField';
 export * from './IntroBanner';
 export * from './DeleteAccountDialog';
+export * from './Glass';

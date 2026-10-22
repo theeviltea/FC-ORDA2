@@ -1,14 +1,15 @@
 import { useState, type ReactNode, type RefObject } from 'react';
-import { ScrollView, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Platform, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { colors } from '@/theme';
 
 type Props = {
   children: ReactNode;
-  /** Header pinned to the top (AppHeader / GuestHeader / NavBar); content scrolls under it. */
+  /** Floating header (AppHeader / GuestHeader / NavBar); content scrolls under it. */
   header?: ReactNode;
-  /** Leaves room for the floating tab bar. */
+  /** Tab screen: leaves room for the tab bar. */
   tabs?: boolean;
   gap?: number;
   /** Decorative layer that scrolls with the content (brand stars). */
@@ -26,31 +27,29 @@ type Props = {
   readingProgress?: boolean;
 };
 
-/** Screen on the brand background: fixed header on top, scrollable content below. */
+/** `#F2F6FA` + alpha → `rgba(…)` for the scroll-edge fade. */
+function fade(hex: string, a: number) {
+  const m = /^#([0-9a-f]{6})$/i.exec(hex);
+  if (!m) return hex;
+  const n = parseInt(m[1], 16);
+  return `rgba(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255}, ${a})`;
+}
+
+/**
+ * Screen on the brand background. The header floats over the content (iOS 26 style: glass buttons, no bar);
+ * once the content scrolls under it, a soft scroll-edge fade in the page colour keeps the title readable.
+ */
 export function Screen({ children, header, tabs, gap = 28, decor, footer, footerHeight = 0, bg = colors.bg, headerBg, scrollRef, readingProgress }: Props) {
   const insets = useSafeAreaInsets();
   const [scrolled, setScrolled] = useState(false);
   const [read, setRead] = useState(0);
+  const [headerH, setHeaderH] = useState(insets.top + 8 + 52);
+  const edge = headerBg ?? bg;
+  // Native tabs (iOS/Android) already sit outside the content and report their height through the safe-area insets;
+  // the web keeps the floating JS tab bar, so it needs the extra room.
+  const tabRoom = tabs && Platform.OS === 'web' ? 110 : 40;
   return (
     <View style={{ flex: 1, backgroundColor: bg }}>
-      {header ? (
-        <View
-          style={{
-            paddingTop: insets.top + 8,
-            backgroundColor: headerBg ?? bg,
-            zIndex: 10,
-            borderBottomWidth: 1,
-            borderColor: scrolled ? colors.line : 'transparent',
-            boxShadow: scrolled ? '0 6px 16px rgba(23, 42, 81, 0.06)' : undefined,
-          }}>
-          {header}
-          {readingProgress ? (
-            <View aria-hidden style={{ height: 3, marginTop: 4, backgroundColor: colors.blue10 }}>
-              <View style={{ width: `${Math.round(read * 100)}%`, height: 3, backgroundColor: colors.blue }} />
-            </View>
-          ) : null}
-        </View>
-      ) : null}
       <ScrollView
         ref={scrollRef}
         showsVerticalScrollIndicator={false}
@@ -64,10 +63,28 @@ export function Screen({ children, header, tabs, gap = 28, decor, footer, footer
             setRead(max > 0 ? Math.min(1, Math.max(0, contentOffset.y / max)) : 0);
           }
         }}
-        contentContainerStyle={{ paddingTop: header ? 8 : insets.top + 8, paddingBottom: (tabs ? 110 : 40) + footerHeight + insets.bottom, gap }}>
+        contentContainerStyle={{ paddingTop: header ? headerH + 8 : insets.top + 8, paddingBottom: tabRoom + footerHeight + insets.bottom, gap }}>
         {decor}
         {children}
       </ScrollView>
+      {header ? (
+        <View style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10 }} pointerEvents="box-none" onLayout={(e) => setHeaderH(e.nativeEvent.layout.height)}>
+          <LinearGradient
+            pointerEvents="none"
+            colors={[fade(edge, 0.98), fade(edge, 0.92), fade(edge, 0)]}
+            locations={[0, 0.7, 1]}
+            style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: -32, opacity: scrolled || headerBg ? 1 : 0 }}
+          />
+          <View style={{ paddingTop: insets.top + 8 }} pointerEvents="box-none">
+            {header}
+          </View>
+          {readingProgress ? (
+            <View aria-hidden style={{ height: 3, marginTop: 4, marginHorizontal: 16, borderRadius: 2, overflow: 'hidden', backgroundColor: colors.blue10 }}>
+              <View style={{ width: `${Math.round(read * 100)}%`, height: 3, backgroundColor: colors.blue }} />
+            </View>
+          ) : null}
+        </View>
+      ) : null}
       {footer}
     </View>
   );

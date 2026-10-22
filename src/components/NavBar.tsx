@@ -3,8 +3,8 @@ import { View } from 'react-native';
 
 import { colors } from '@/theme';
 
-import { Icon, type IconName } from './Icon';
-import { Pressable } from './Pressable';
+import { GlassButton } from './Glass';
+import type { IconName } from './Icon';
 import { Text } from './Text';
 
 type Props = {
@@ -16,26 +16,18 @@ type Props = {
   tone?: 'light' | 'dark';
 };
 
-/** Second-level nav bar: «Назад» left, centred uppercase title, one action icon (or empty slot) right. */
+/** Second-level nav bar (iOS 26 style): round glass «Назад» left, centred uppercase title, one glass action (or empty slot) right. */
 export function NavBar({ title, back = true, action, tone = 'light' }: Props) {
   const fg = tone === 'dark' ? colors.surface : colors.navy;
   const goBack = () => (router.canGoBack() ? router.back() : router.replace('/'));
   return (
-    <View style={{ height: 48, paddingHorizontal: 8, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-      {back ? (
-        <Pressable accessibilityRole="button" accessibilityLabel="Назад" onPress={goBack} style={{ width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
-          <Icon name="arrow-left-01" size={26} color={fg} weight={1.8} />
-        </Pressable>
-      ) : (
-        <View style={{ width: 44 }} />
-      )}
+    <View style={{ height: 52, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+      {back ? <GlassButton icon="arrow-left-01" label="Назад" tone={tone} onPress={goBack} /> : <View style={{ width: 44 }} />}
       <Text display size={20} upper numberOfLines={1} align="center" color={fg} style={{ flex: 1, letterSpacing: 0.4 }}>
         {title}
       </Text>
       {action ? (
-        <Pressable accessibilityRole="button" accessibilityLabel={action.label} accessibilityState={action.active !== undefined ? { selected: action.active } : undefined} onPress={action.onPress} style={{ width: 44, height: 44, borderRadius: 12, alignItems: 'center', justifyContent: 'center' }}>
-          <Icon name={action.icon} size={24} color={action.active ? colors.red : fg} filled={action.active} />
-        </Pressable>
+        <GlassButton icon={action.icon} label={action.label} tone={tone} onPress={action.onPress} selected={action.active} color={action.active ? colors.red : undefined} filled={action.active} />
       ) : (
         <View style={{ width: 44 }} />
       )}
