@@ -1,13 +1,15 @@
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { View } from 'react-native';
 
-import { ListCard, NavBar, Screen, SectionHeader, Star } from '@/components';
+import { Button, DeleteAccountDialog, ListCard, NavBar, Screen, SectionHeader, Star, Text } from '@/components';
 import { soon } from '@/data/nav';
-import { languages, usePrefs } from '@/data/prefs';
+import { languages, setPrefs, usePrefs } from '@/data/prefs';
 
-/** Настройки: аккаунт, уведомления, язык, помощь. */
+/** Настройки: аккаунт, уведомления, язык, помощь, удаление аккаунта. */
 export default function Settings() {
   const { lang } = usePrefs();
+  const [del, setDel] = useState(false);
   const section = (title: string, rows: Parameters<typeof ListCard>[0]['rows']) => (
     <View style={{ gap: 12, marginTop: 8 }}>
       <SectionHeader title={title} />
@@ -15,6 +17,7 @@ export default function Settings() {
     </View>
   );
   return (
+    <>
     <Screen
       gap={12}
       header={<NavBar title="Настройки" />}
@@ -33,6 +36,21 @@ export default function Settings() {
         { icon: 'customer-support', title: 'Центр поддержки', sub: 'Ответим в течение часа', onPress: () => router.push('/support') },
         { icon: 'smart-phone-01', title: 'О приложении', sub: 'Версия 1.0.0', onPress: soon('О приложении') },
       ])}
+      <Button label="Удалить аккаунт" icon="delete-02" variant="outlineDanger" height={52} onPress={() => setDel(true)} style={{ marginHorizontal: 20, marginTop: 20 }} />
+      <Text size={13} color="text2" align="center" style={{ marginTop: -6 }}>
+        Баллы, достижения и покупки удалятся навсегда
+      </Text>
     </Screen>
+    <DeleteAccountDialog
+      visible={del}
+      onClose={() => setDel(false)}
+      onDeleted={() => {
+        setDel(false);
+        setPrefs({ authed: false });
+        router.dismissAll();
+        router.navigate('/');
+      }}
+    />
+    </>
   );
 }

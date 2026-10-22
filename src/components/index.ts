@@ -33,3 +33,4 @@ export * from './Checkbox';
 export * from './Avatar';
 export * from './PasswordField';
 export * from './IntroBanner';
+export * from './DeleteAccountDialog';
