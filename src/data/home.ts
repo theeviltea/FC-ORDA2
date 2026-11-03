@@ -70,4 +70,5 @@ export const sponsors = [
   { name: 'Integra Construction', logo: img.sponsorIntegra, h: 40, ratio: 3.316 },
   { name: 'ERG', logo: img.sponsorErg, h: 56, ratio: 1.305 },
   { name: 'Евразия — страхование жизни', logo: img.sponsorEurasia, h: 40, ratio: 3.566 },
+  { name: 'ALLOFF', logo: img.sponsorAlloff, h: 28, ratio: 4.737 },
 ];

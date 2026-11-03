@@ -26,6 +26,7 @@ export const img = {
   sponsorIntegra: require('../../assets/images/sponsor-integra.png'),
   sponsorErg: require('../../assets/images/sponsor-erg.png'),
   sponsorEurasia: require('../../assets/images/sponsor-eurasia.png'),
+  sponsorAlloff: require('../../assets/images/sponsor-alloff.png'),
   mediaAstanov: require('../../assets/images/media-astanov.webp'),
   mediaToktybay: require('../../assets/images/media-toktybay.webp'),
   mediaNatel: require('../../assets/images/media-natel.webp'),
