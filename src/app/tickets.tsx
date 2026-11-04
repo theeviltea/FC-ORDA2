@@ -85,7 +85,7 @@ export default function Tickets() {
           </Text>
         </Text>
       </View>
-      <Button label="Оплатить" icon="ticket-01" height={52} style={{ paddingHorizontal: 22 }} onPress={() => router.push({ pathname: '/soon', params: { title: 'Оплата' } })} />
+      <Button label="Оплатить" icon="ticket-01" height={52} style={{ paddingHorizontal: 22 }} onPress={() => router.push({ pathname: '/checkout', params: { kind: 'tickets', title: 'ORDA — Кайрат', meta: `${qty} ${word(qty)} · ${z.name}`, amount: String(z.price * qty) } })} />
     </View>
   );
 

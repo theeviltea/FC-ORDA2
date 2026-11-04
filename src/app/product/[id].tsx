@@ -6,6 +6,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Button, Card, Gradient, Icon, NavBar, Pressable, ProductCard, QuantityStepper, Screen, Star, Text, TextField } from '@/components';
 import { aspect, img } from '@/data/images';
+import { vatNote } from '@/data/legal';
 import { findItem, promoCodes, tenge } from '@/data/shop';
 import { colors, radius, shadows } from '@/theme';
 
@@ -174,7 +175,7 @@ export default function ProductScreen() {
           {tenge(unit * qty)}
         </Text>
       </View>
-      <Button label="Купить" height={54} style={{ flex: 1 }} onPress={() => router.push({ pathname: '/soon', params: { title: 'Оформление заказа' } })} />
+      <Button label="Купить" height={54} style={{ flex: 1 }} onPress={() => router.push({ pathname: '/checkout', params: { kind: 'shop', id: item.id, meta: summary, amount: String(unit * qty) } })} />
     </View>
   );
 
@@ -208,6 +209,9 @@ export default function ProductScreen() {
               </>
             ) : null}
           </View>
+          <Text size={12} lineHeight={16} color="text2">
+            {vatNote}
+          </Text>
           <Text size={15} lineHeight={22} color="text2">
             {item.lead}
           </Text>
@@ -312,8 +316,10 @@ export default function ProductScreen() {
         <Accordion
           items={[
             { id: 'desc', title: 'Описание', body: item.lead },
-            { id: 'spec', title: 'Характеристики', body: 'Состав: [состав ткани]. Посадка: [тип посадки]. Уход: [условия стирки].' },
-            { id: 'ship', title: 'Доставка и возврат', body: 'Доставка по Казахстану: [сроки]. Возврат в течение [N] дней при сохранении бирок.' },
+            { id: 'spec', title: 'Характеристики', body: item.spec },
+            { id: 'kit', title: 'Комплектация и гарантия', body: `${item.kit} ${item.warranty}` },
+            { id: 'ship', title: 'Доставка и оплата', body: 'Самовывоз из фан-шопа в Шымкенте — бесплатно, курьер по Шымкенту — 1 500 ₸ (1–2 дня), по Казахстану — 2 500 ₸ (3–7 дней). Оплата картой Visa или Mastercard через Halyk ePay.' },
+            { id: 'ret', title: 'Обмен и возврат', body: 'Обмен или возврат в течение 14 дней, если товар не был в употреблении и сохранены бирки и чек. Деньги возвращаются на карту, которой оплачен заказ. Подробно — Профиль → Настройки → Документы.' },
           ]}
         />
 

@@ -27,6 +27,8 @@ export const img = {
   sponsorErg: require('../../assets/images/sponsor-erg.png'),
   sponsorEurasia: require('../../assets/images/sponsor-eurasia.png'),
   sponsorAlloff: require('../../assets/images/sponsor-alloff.png'),
+  payVisa: require('../../assets/images/pay/visa.png'),
+  payMastercard: require('../../assets/images/pay/mastercard.png'),
   mediaAstanov: require('../../assets/images/media-astanov.webp'),
   mediaToktybay: require('../../assets/images/media-toktybay.webp'),
   mediaNatel: require('../../assets/images/media-natel.webp'),

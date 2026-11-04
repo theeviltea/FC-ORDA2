@@ -87,10 +87,17 @@ export default function Register() {
           </View>
           <Text size={14} lineHeight={20} color={tried && !agree ? 'errorText' : 'text2'} style={{ flex: 1 }}>
             Принимаю{' '}
-            <Text size={14} lineHeight={20} weight={600} color="blue600" onPress={() => router.push({ pathname: '/soon', params: { title: 'Условия использования' } })}>
-              условия использования
+            <Text size={14} lineHeight={20} weight={600} color="blue600" onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'offer' } })}>
+              публичную оферту
+            </Text>
+            ,{' '}
+            <Text size={14} lineHeight={20} weight={600} color="blue600" onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'privacy' } })}>
+              политику конфиденциальности
             </Text>{' '}
-            и даю согласие на обработку персональных данных
+            и даю{' '}
+            <Text size={14} lineHeight={20} weight={600} color="blue600" onPress={() => router.push({ pathname: '/legal/[doc]', params: { doc: 'personal-data' } })}>
+              согласие на обработку персональных данных
+            </Text>
           </Text>
         </Pressable>
       </View>
