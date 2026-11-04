@@ -13,6 +13,7 @@ const rows: { icon: IconName; title: string; sub: string; to: Href }[] = [
   { icon: 'champion', title: 'Мои достижения', sub: '3 получено · 2 в процессе', to: '/achievements' },
   { icon: 'shopping-bag-02', title: 'История покупок', sub: '12 покупок', to: '/orders' },
   { icon: 'notification-01', title: 'Уведомления', sub: 'Матчи, новости клуба', to: '/notification-settings' },
+  { icon: 'legal-document-01', title: 'Документы и реквизиты', sub: 'Оферта, оплата, доставка, возврат', to: '/legal' },
   { icon: 'settings-01', title: 'Настройки', sub: 'Данные, язык, помощь', to: '/settings' },
 ];
 

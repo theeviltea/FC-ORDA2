@@ -36,7 +36,6 @@ export default function Settings() {
         { icon: 'customer-support', title: 'Центр поддержки', sub: 'Ответим в течение часа', onPress: () => router.push('/support') },
         { icon: 'smart-phone-01', title: 'О приложении', sub: 'Версия 1.0.0', onPress: soon('О приложении') },
       ])}
-      {section('О клубе', [{ icon: 'legal-document-01', title: 'Документы и реквизиты', sub: 'Оферта, оплата, доставка, возврат', onPress: () => router.push('/legal') }])}
       <Button label="Удалить аккаунт" icon="delete-02" variant="outlineDanger" height={52} onPress={() => setDel(true)} style={{ marginHorizontal: 20, marginTop: 20 }} />
       <Text size={13} color="text2" align="center" style={{ marginTop: -6 }}>
         Баллы, достижения и покупки удалятся навсегда

@@ -85,7 +85,7 @@ export default function Legal() {
         </Card>,
       )}
       <Text size={12} lineHeight={17} color="text3" align="center" style={{ marginHorizontal: 32, marginTop: 4 }}>
-        Документы всегда доступны здесь: Профиль → Настройки → Документы
+        Документы всегда доступны здесь: Профиль → Документы и реквизиты
       </Text>
     </Screen>
   );
