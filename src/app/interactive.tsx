@@ -1,18 +1,18 @@
 import { Image } from 'expo-image';
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, type Href } from 'expo-router';
 import { View } from 'react-native';
 
 import { Button, Gradient, Icon, NavBar, Pressable, Screen, Star, Text, type IconName } from '@/components';
 import { img } from '@/data/images';
-import { soon } from '@/data/nav';
+import { match, useStadium } from '@/data/stadium';
+import { useGate } from '@/features/stadium/gate';
 import { colors, shadows } from '@/theme';
 
-const games: { icon: IconName; title: string; sub: string; state: 'live' | 'match' | 'break'; tone: 'red' | 'blue'; to?: () => void }[] = [
-  { icon: 'mic-01', title: 'Шумомер', sub: 'Поддержите голосом: самый громкий сектор покажут на табло', state: 'live', tone: 'red', to: () => router.push('/noise') },
-  { icon: 'camera-01', title: 'Фото на табло', sub: 'Отправьте селфи с трибуны — лучшие попадут на экран', state: 'match', tone: 'blue', to: soon('Фото на табло') },
-  { icon: 'football', title: 'Счёт перерыва', sub: 'Угадайте счёт к 45-й минуте · +20 баллов', state: 'match', tone: 'blue', to: soon('Счёт перерыва') },
-  { icon: 'gift', title: 'Розыгрыш в перерыве', sub: 'Ваш билет участвует автоматически', state: 'break', tone: 'blue', to: soon('Розыгрыш в перерыве') },
+const games: { icon: IconName; title: string; sub: string; state: 'live' | 'match' | 'break'; tone: 'red' | 'blue'; to: Href; gated?: boolean }[] = [
+  { icon: 'mic-01', title: 'Шумомер', sub: 'Поддержите голосом: самый громкий сектор покажут на табло', state: 'live', tone: 'red', to: '/noise' },
+  { icon: 'camera-01', title: 'Фото на табло', sub: 'Отправьте селфи с трибуны — лучшие попадут на экран', state: 'match', tone: 'blue', to: '/stadium/photo', gated: true },
+  { icon: 'football', title: 'Счёт перерыва', sub: 'Угадайте счёт к 45-й минуте · +20 баллов', state: 'match', tone: 'blue', to: '/stadium/score', gated: true },
+  { icon: 'gift', title: 'Розыгрыш в перерыве', sub: 'Ваш билет участвует автоматически', state: 'break', tone: 'blue', to: '/stadium/draw', gated: true },
 ];
 const steps = [
   ['Приходите на матч', 'Игры открываются за 2 часа до начала'],
@@ -22,9 +22,11 @@ const steps = [
 
 /** Интерактив: матч-день с отметкой «Я на стадионе», игры на стадионе, как это работает. */
 export default function Interactive() {
-  const [here, setHere] = useState(false);
+  const gate = useGate();
+  const { checkedIn: here } = useStadium();
   return (
     <Screen gap={16} header={<NavBar title="Интерактив" />}>
+      {gate.sheets}
       <View style={{ marginHorizontal: 20, borderRadius: 24, overflow: 'hidden', backgroundColor: colors.navy }}>
         <Image source={img.photoFans} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, opacity: 0.35 }} contentFit="cover" />
         <Gradient colors={['rgba(23,42,81,0.2)', colors.navy]} locations={[0, 0.85] as const} style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }} />
@@ -35,7 +37,7 @@ export default function Interactive() {
             </Text>
           </View>
           <Text display size={30} lineHeight={31} upper color="surface">
-            ORDA — Кайрат
+            {match.title}
           </Text>
           <Text size={14} color="onDark2">
             Сб, 25 октября · 19:00 · интерактив откроется в 17:00
@@ -49,11 +51,11 @@ export default function Interactive() {
                 {here ? 'Вы на стадионе · +50 баллов' : 'Отметьтесь на стадионе'}
               </Text>
               <Text size={13} color="onDark2">
-                {here ? 'Сектор Юг · фан, ряд 4. Все игры открыты' : '+50 баллов и доступ ко всем играм'}
+                {here ? `Сектор ${match.seat.sector}, ряд ${match.seat.row}. Все игры открыты` : '+50 баллов и доступ ко всем играм'}
               </Text>
             </View>
           </View>
-          {here ? null : <Button label="Я на стадионе" icon="qr-code" variant="white" height={52} onPress={() => setHere(true)} />}
+          {here ? null : <Button label="Я на стадионе" icon="qr-code" variant="white" height={52} onPress={() => gate.open(null)} />}
         </View>
       </View>
 
@@ -62,7 +64,7 @@ export default function Interactive() {
       </Text>
       <View style={{ flexDirection: 'row', flexWrap: 'wrap', gap: 12, paddingHorizontal: 20 }}>
         {games.map((g) => (
-          <Pressable key={g.title} accessibilityRole="link" onPress={g.to} style={{ width: '47.9%', minHeight: 196, padding: 14, gap: 8, borderRadius: 22, backgroundColor: colors.surface, overflow: 'hidden', ...shadows.card }}>
+          <Pressable key={g.title} accessibilityRole="link" onPress={() => (g.gated ? gate.open(g.to) : router.push(g.to))} style={{ width: '47.9%', minHeight: 196, padding: 14, gap: 8, borderRadius: 22, backgroundColor: colors.surface, overflow: 'hidden', ...shadows.card }}>
             <Star w={54} fill={colors.bg} style={{ right: -14, top: -14 }} />
             <View style={{ width: 48, height: 48, borderRadius: 16, backgroundColor: g.tone === 'red' ? colors.errorBg : colors.blue10, alignItems: 'center', justifyContent: 'center' }}>
               <Icon name={g.icon} size={26} color={g.tone === 'red' ? 'red' : 'blue'} weight={1.7} />

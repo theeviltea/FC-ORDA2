@@ -37,3 +37,5 @@ export * from './DeleteAccountDialog';
 export * from './Glass';
 export * from './Celebrate';
 export * from './PaymentLogos';
+export * from './GameSheet';
+export * from './ResultScreen';
