@@ -5,6 +5,10 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Icon, Pressable, type IconName } from '@/components';
 import { bodyFamily, colors } from '@/theme';
 
+/** Высота строки поля; растёт до 4 строк, дальше прокрутка. */
+const LINE = 22;
+const MAX_H = LINE * 4;
+
 type Props = {
   placeholder: string;
   onSend: (text: string) => void;
@@ -26,12 +30,14 @@ export function Composer({ placeholder, onSend, left, top, idleIcon, busy, onSto
   const insets = useSafeAreaInsets();
   const [text, setText] = useState(initial);
   const [focus, setFocus] = useState(false);
+  const [h, setH] = useState(LINE);
   const has = text.trim().length > 0;
   const active = focus || has;
   const send = () => {
     if (!has || busy) return;
     onSend(text.trim());
     setText('');
+    setH(LINE);
   };
   return (
     <View style={{ paddingTop: 10, paddingHorizontal: 12, paddingBottom: Math.max(insets.bottom, 10) + 12, backgroundColor: 'rgba(255,255,255,0.96)', borderTopWidth: 1, borderColor: colors.surfaceSunken, gap: 8 }}>
@@ -48,15 +54,21 @@ export function Composer({ placeholder, onSend, left, top, idleIcon, busy, onSto
             paddingLeft: 16,
             borderRadius: 26,
             backgroundColor: active ? colors.surface : colors.bg,
-            borderWidth: active ? 1.5 : 1,
+            borderWidth: 1.5,
             borderColor: active ? colors.blue : colors.line,
             flexDirection: 'row',
-            alignItems: 'center',
+            alignItems: 'flex-end',
             gap: 4,
           }}>
           <TextInput
             value={text}
-            onChangeText={(t) => setText(t.slice(0, 3000))}
+            onChangeText={(t) => {
+              setText(t.slice(0, 3000));
+              if (!t) setH(LINE);
+            }}
+            onContentSizeChange={(e) => setH(Math.max(LINE, e.nativeEvent.contentSize.height))}
+            scrollEnabled={h > MAX_H}
+            numberOfLines={1}
             onFocus={() => setFocus(true)}
             onBlur={() => setFocus(false)}
             placeholder={placeholder}
@@ -64,7 +76,7 @@ export function Composer({ placeholder, onSend, left, top, idleIcon, busy, onSto
             accessibilityLabel={placeholder}
             multiline
             onSubmitEditing={send}
-            style={[{ flex: 1, maxHeight: 110, paddingVertical: 10, fontFamily: bodyFamily[400], fontSize: 16, lineHeight: 21, color: colors.navy }, { outlineStyle: 'none' } as object]}
+            style={[{ flex: 1, height: Math.min(MAX_H, h), marginVertical: 9.5, paddingVertical: 0, fontFamily: bodyFamily[400], fontSize: 16, lineHeight: LINE, color: colors.navy }, { outlineStyle: 'none', resize: 'none' } as object]}
           />
           {busy ? (
             <Pressable accessibilityRole="button" accessibilityLabel="Остановить ответ" onPress={onStop} style={{ width: 44, height: 44, borderRadius: 22, backgroundColor: colors.navy, alignItems: 'center', justifyContent: 'center' }}>
