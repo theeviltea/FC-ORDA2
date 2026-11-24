@@ -6,11 +6,15 @@ import { View } from 'react-native';
 import { Button, Card, Gradient, Icon, NavBar, Pressable, Screen, SectionHeader, Star, Text, TicketQRSheet, Avatar, type IconName } from '@/components';
 import { img } from '@/data/images';
 import { setPrefs, usePrefs } from '@/data/prefs';
+import { friendsOf, incomingOf, plural, useSocial } from '@/data/social';
 import { fan, formatPoints } from '@/data/user';
+import { FanAvatar } from '@/features/social/parts';
 import { colors, radius, shadows } from '@/theme';
 
 const rows: { icon: IconName; title: string; sub: string; to: Href }[] = [
   { icon: 'champion', title: 'Мои достижения', sub: '3 получено · 2 в процессе', to: '/achievements' },
+  { icon: 'bubble-chat', title: 'Сообщения', sub: '3 непрочитанных', to: '/chats' },
+  { icon: 'comment-01', title: 'Мои темы на форуме', sub: '2 темы · 65 ответов', to: '/forum' },
   { icon: 'shopping-bag-02', title: 'История покупок', sub: '12 покупок', to: '/orders' },
   { icon: 'notification-01', title: 'Уведомления', sub: 'Матчи, новости клуба', to: '/notification-settings' },
   { icon: 'legal-document-01', title: 'Документы и реквизиты', sub: 'Оферта, оплата, доставка, возврат', to: '/legal' },
@@ -21,6 +25,9 @@ const rows: { icon: IconName; title: string; sub: string; to: Href }[] = [
 export default function Profile() {
   const [qr, setQr] = useState(false);
   const { personal } = usePrefs();
+  const social = useSocial();
+  const friends = friendsOf(social);
+  const requests = incomingOf(social).length;
   return (
     <>
     <Screen
@@ -99,6 +106,31 @@ export default function Profile() {
       </Card>
       </Pressable>
 
+      <Pressable accessibilityRole="link" accessibilityLabel={`Друзья: ${friends.length}`} onPress={() => router.push('/friends')} style={{ marginHorizontal: 20, paddingVertical: 14, paddingHorizontal: 16, borderRadius: radius.l, backgroundColor: colors.surface, flexDirection: 'row', alignItems: 'center', gap: 12, ...shadows.card }}>
+        <View style={{ flexDirection: 'row' }}>
+          {friends.slice(0, 3).map((f, i) => (
+            <View key={f.id} style={{ marginLeft: i ? -10 : 0, borderRadius: 20, borderWidth: 2, borderColor: colors.surface }}>
+              <FanAvatar id={f.id} size={36} online={false} />
+            </View>
+          ))}
+        </View>
+        <View style={{ flex: 1, gap: 2 }}>
+          <Text size={16} weight={700} numberOfLines={1}>
+            {friends.length} {plural(friends.length, ['друг', 'друга', 'друзей'])}
+          </Text>
+          <Text size={13} color="text2">
+            {friends.filter((f) => f.online).length} в сети
+          </Text>
+        </View>
+        {requests ? (
+          <View style={{ height: 26, paddingHorizontal: 10, borderRadius: 13, backgroundColor: colors.red, justifyContent: 'center' }}>
+            <Text size={12} lineHeight={14} weight={700} color="surface">
+              +{requests} {plural(requests, ['заявка', 'заявки', 'заявок'])}
+            </Text>
+          </View>
+        ) : null}
+        <Icon name="arrow-right-01" size={20} color="text3" weight={1.8} />
+      </Pressable>
       <View style={{ marginTop: 8 }}>
         <SectionHeader title="Мои билеты" link="Все" onPress={() => router.push('/my-tickets')} />
       </View>

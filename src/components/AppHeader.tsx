@@ -36,6 +36,7 @@ export function AppHeader() {
         </Glass>
       </Pressable>
       <View style={{ flex: 1 }} />
+      <GlassButton icon="bubble-chat" label="Сообщения" badge={3} onPress={() => router.push('/chats')} />
       <GlassButton icon="notification-01" label="Уведомления" badge={fan.unread} onPress={() => router.push('/inbox')} />
     </View>
   );

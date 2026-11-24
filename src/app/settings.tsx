@@ -30,6 +30,7 @@ export default function Settings() {
         { icon: 'user', title: 'Личные данные', sub: 'Имя, телефон и почта', onPress: () => router.push('/personal') },
         { icon: 'shield-01', title: 'Безопасность', sub: 'Пароль, вход и устройства', onPress: () => router.push('/security') },
         { icon: 'notification-01', title: 'Уведомления', sub: 'Матчи, новости клуба', onPress: () => router.push('/notification-settings') },
+        { icon: 'eye', title: 'Приватность', sub: 'Поиск, заявки, чёрный список', onPress: () => router.push('/privacy') },
       ])}
       {section('Язык', [{ icon: 'translate', title: 'Язык приложения', sub: languages.find((l) => l.id === lang)!.name, onPress: () => router.push('/language') }])}
       {section('Помощь', [
